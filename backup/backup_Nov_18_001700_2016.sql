@@ -2,16 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.4
--- Dumped by pg_dump version 9.5.4
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
@@ -34,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: act_posee_campo; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: act_posee_campo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE act_posee_campo (
@@ -43,10 +39,10 @@ CREATE TABLE act_posee_campo (
 );
 
 
-ALTER TABLE act_posee_campo OWNER TO "Siradex";
+ALTER TABLE act_posee_campo OWNER TO postgres;
 
 --
--- Name: auth_cas; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: auth_cas; Type: TABLE; Schema: public; Owner: Siradex; Tablespace: 
 --
 
 CREATE TABLE auth_cas (
@@ -83,7 +79,7 @@ ALTER SEQUENCE auth_cas_id_seq OWNED BY auth_cas.id;
 
 
 --
--- Name: auth_event; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: auth_event; Type: TABLE; Schema: public; Owner: Siradex; Tablespace: 
 --
 
 CREATE TABLE auth_event (
@@ -120,7 +116,7 @@ ALTER SEQUENCE auth_event_id_seq OWNED BY auth_event.id;
 
 
 --
--- Name: auth_membership; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: auth_membership; Type: TABLE; Schema: public; Owner: Siradex; Tablespace: 
 --
 
 CREATE TABLE auth_membership (
@@ -154,7 +150,7 @@ ALTER SEQUENCE auth_membership_id_seq OWNED BY auth_membership.id;
 
 
 --
--- Name: auth_permission; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: Siradex; Tablespace: 
 --
 
 CREATE TABLE auth_permission (
@@ -190,7 +186,7 @@ ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
 
 
 --
--- Name: backup; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: backup; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE backup (
@@ -200,10 +196,10 @@ CREATE TABLE backup (
 );
 
 
-ALTER TABLE backup OWNER TO "Siradex";
+ALTER TABLE backup OWNER TO postgres;
 
 --
--- Name: backup_id_backup_seq; Type: SEQUENCE; Schema: public; Owner: Siradex
+-- Name: backup_id_backup_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE backup_id_backup_seq
@@ -214,17 +210,17 @@ CREATE SEQUENCE backup_id_backup_seq
     CACHE 1;
 
 
-ALTER TABLE backup_id_backup_seq OWNER TO "Siradex";
+ALTER TABLE backup_id_backup_seq OWNER TO postgres;
 
 --
--- Name: backup_id_backup_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Siradex
+-- Name: backup_id_backup_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE backup_id_backup_seq OWNED BY backup.id_backup;
 
 
 --
--- Name: campo; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: campo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE campo (
@@ -236,10 +232,10 @@ CREATE TABLE campo (
 );
 
 
-ALTER TABLE campo OWNER TO "Siradex";
+ALTER TABLE campo OWNER TO postgres;
 
 --
--- Name: campo_catalogo; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: campo_catalogo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE campo_catalogo (
@@ -251,10 +247,10 @@ CREATE TABLE campo_catalogo (
 );
 
 
-ALTER TABLE campo_catalogo OWNER TO "Siradex";
+ALTER TABLE campo_catalogo OWNER TO postgres;
 
 --
--- Name: campo_catalogo_id_campo_cat_seq; Type: SEQUENCE; Schema: public; Owner: Siradex
+-- Name: campo_catalogo_id_campo_cat_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE campo_catalogo_id_campo_cat_seq
@@ -265,17 +261,17 @@ CREATE SEQUENCE campo_catalogo_id_campo_cat_seq
     CACHE 1;
 
 
-ALTER TABLE campo_catalogo_id_campo_cat_seq OWNER TO "Siradex";
+ALTER TABLE campo_catalogo_id_campo_cat_seq OWNER TO postgres;
 
 --
--- Name: campo_catalogo_id_campo_cat_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Siradex
+-- Name: campo_catalogo_id_campo_cat_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE campo_catalogo_id_campo_cat_seq OWNED BY campo_catalogo.id_campo_cat;
 
 
 --
--- Name: campo_id_campo_seq; Type: SEQUENCE; Schema: public; Owner: Siradex
+-- Name: campo_id_campo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE campo_id_campo_seq
@@ -286,17 +282,17 @@ CREATE SEQUENCE campo_id_campo_seq
     CACHE 1;
 
 
-ALTER TABLE campo_id_campo_seq OWNER TO "Siradex";
+ALTER TABLE campo_id_campo_seq OWNER TO postgres;
 
 --
--- Name: campo_id_campo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Siradex
+-- Name: campo_id_campo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE campo_id_campo_seq OWNED BY campo.id_campo;
 
 
 --
--- Name: catalogo; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: catalogo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE catalogo (
@@ -306,10 +302,10 @@ CREATE TABLE catalogo (
 );
 
 
-ALTER TABLE catalogo OWNER TO "Siradex";
+ALTER TABLE catalogo OWNER TO postgres;
 
 --
--- Name: catalogo_id_catalogo_seq; Type: SEQUENCE; Schema: public; Owner: Siradex
+-- Name: catalogo_id_catalogo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE catalogo_id_catalogo_seq
@@ -320,17 +316,17 @@ CREATE SEQUENCE catalogo_id_catalogo_seq
     CACHE 1;
 
 
-ALTER TABLE catalogo_id_catalogo_seq OWNER TO "Siradex";
+ALTER TABLE catalogo_id_catalogo_seq OWNER TO postgres;
 
 --
--- Name: catalogo_id_catalogo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Siradex
+-- Name: catalogo_id_catalogo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE catalogo_id_catalogo_seq OWNED BY catalogo.id_catalogo;
 
 
 --
--- Name: comprobante; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: comprobante; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE comprobante (
@@ -341,10 +337,10 @@ CREATE TABLE comprobante (
 );
 
 
-ALTER TABLE comprobante OWNER TO "Siradex";
+ALTER TABLE comprobante OWNER TO postgres;
 
 --
--- Name: comprobante_id_comprobante_seq; Type: SEQUENCE; Schema: public; Owner: Siradex
+-- Name: comprobante_id_comprobante_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE comprobante_id_comprobante_seq
@@ -355,17 +351,17 @@ CREATE SEQUENCE comprobante_id_comprobante_seq
     CACHE 1;
 
 
-ALTER TABLE comprobante_id_comprobante_seq OWNER TO "Siradex";
+ALTER TABLE comprobante_id_comprobante_seq OWNER TO postgres;
 
 --
--- Name: comprobante_id_comprobante_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Siradex
+-- Name: comprobante_id_comprobante_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE comprobante_id_comprobante_seq OWNED BY comprobante.id_comprobante;
 
 
 --
--- Name: gestiona_catalogo; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: gestiona_catalogo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE gestiona_catalogo (
@@ -374,10 +370,10 @@ CREATE TABLE gestiona_catalogo (
 );
 
 
-ALTER TABLE gestiona_catalogo OWNER TO "Siradex";
+ALTER TABLE gestiona_catalogo OWNER TO postgres;
 
 --
--- Name: gestiona_tipo_act; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: gestiona_tipo_act; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE gestiona_tipo_act (
@@ -386,10 +382,10 @@ CREATE TABLE gestiona_tipo_act (
 );
 
 
-ALTER TABLE gestiona_tipo_act OWNER TO "Siradex";
+ALTER TABLE gestiona_tipo_act OWNER TO postgres;
 
 --
--- Name: jefe_dependencia; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: jefe_dependencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE jefe_dependencia (
@@ -398,10 +394,10 @@ CREATE TABLE jefe_dependencia (
 );
 
 
-ALTER TABLE jefe_dependencia OWNER TO "Siradex";
+ALTER TABLE jefe_dependencia OWNER TO postgres;
 
 --
--- Name: jefe_dependencia_id_jefe_seq; Type: SEQUENCE; Schema: public; Owner: Siradex
+-- Name: jefe_dependencia_id_jefe_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE jefe_dependencia_id_jefe_seq
@@ -412,17 +408,17 @@ CREATE SEQUENCE jefe_dependencia_id_jefe_seq
     CACHE 1;
 
 
-ALTER TABLE jefe_dependencia_id_jefe_seq OWNER TO "Siradex";
+ALTER TABLE jefe_dependencia_id_jefe_seq OWNER TO postgres;
 
 --
--- Name: jefe_dependencia_id_jefe_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Siradex
+-- Name: jefe_dependencia_id_jefe_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE jefe_dependencia_id_jefe_seq OWNED BY jefe_dependencia.id_jefe;
 
 
 --
--- Name: log_siradex; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: log_siradex; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE log_siradex (
@@ -434,10 +430,10 @@ CREATE TABLE log_siradex (
 );
 
 
-ALTER TABLE log_siradex OWNER TO "Siradex";
+ALTER TABLE log_siradex OWNER TO postgres;
 
 --
--- Name: participa_producto; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: participa_producto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE participa_producto (
@@ -446,10 +442,10 @@ CREATE TABLE participa_producto (
 );
 
 
-ALTER TABLE participa_producto OWNER TO "Siradex";
+ALTER TABLE participa_producto OWNER TO postgres;
 
 --
--- Name: permisos_tipo_act; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: permisos_tipo_act; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE permisos_tipo_act (
@@ -458,10 +454,10 @@ CREATE TABLE permisos_tipo_act (
 );
 
 
-ALTER TABLE permisos_tipo_act OWNER TO "Siradex";
+ALTER TABLE permisos_tipo_act OWNER TO postgres;
 
 --
--- Name: producto; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: producto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE producto (
@@ -469,7 +465,7 @@ CREATE TABLE producto (
     id_tipo integer,
     nombre character varying(128),
     descripcion character varying(256),
-    estado character varying DEFAULT 'En Espera'::character varying,
+    estado character varying DEFAULT 'Por Validar'::character varying,
     evaluacion_criterio character varying(256),
     evaluacion_valor character varying(256),
     fecha_realizacion date,
@@ -480,10 +476,10 @@ CREATE TABLE producto (
 );
 
 
-ALTER TABLE producto OWNER TO "Siradex";
+ALTER TABLE producto OWNER TO postgres;
 
 --
--- Name: producto_id_producto_seq; Type: SEQUENCE; Schema: public; Owner: Siradex
+-- Name: producto_id_producto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE producto_id_producto_seq
@@ -494,17 +490,17 @@ CREATE SEQUENCE producto_id_producto_seq
     CACHE 1;
 
 
-ALTER TABLE producto_id_producto_seq OWNER TO "Siradex";
+ALTER TABLE producto_id_producto_seq OWNER TO postgres;
 
 --
--- Name: producto_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Siradex
+-- Name: producto_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE producto_id_producto_seq OWNED BY producto.id_producto;
 
 
 --
--- Name: producto_tiene_campo; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: producto_tiene_campo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE producto_tiene_campo (
@@ -514,10 +510,10 @@ CREATE TABLE producto_tiene_campo (
 );
 
 
-ALTER TABLE producto_tiene_campo OWNER TO "Siradex";
+ALTER TABLE producto_tiene_campo OWNER TO postgres;
 
 --
--- Name: programa; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: programa; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE programa (
@@ -531,10 +527,10 @@ CREATE TABLE programa (
 );
 
 
-ALTER TABLE programa OWNER TO "Siradex";
+ALTER TABLE programa OWNER TO postgres;
 
 --
--- Name: programa_id_programa_seq; Type: SEQUENCE; Schema: public; Owner: Siradex
+-- Name: programa_id_programa_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE programa_id_programa_seq
@@ -545,17 +541,17 @@ CREATE SEQUENCE programa_id_programa_seq
     CACHE 1;
 
 
-ALTER TABLE programa_id_programa_seq OWNER TO "Siradex";
+ALTER TABLE programa_id_programa_seq OWNER TO postgres;
 
 --
--- Name: programa_id_programa_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Siradex
+-- Name: programa_id_programa_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE programa_id_programa_seq OWNED BY programa.id_programa;
 
 
 --
--- Name: tipo_actividad; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: tipo_actividad; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE tipo_actividad (
@@ -574,10 +570,10 @@ CREATE TABLE tipo_actividad (
 );
 
 
-ALTER TABLE tipo_actividad OWNER TO "Siradex";
+ALTER TABLE tipo_actividad OWNER TO postgres;
 
 --
--- Name: tipo_actividad_id_tipo_seq; Type: SEQUENCE; Schema: public; Owner: Siradex
+-- Name: tipo_actividad_id_tipo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE tipo_actividad_id_tipo_seq
@@ -588,17 +584,17 @@ CREATE SEQUENCE tipo_actividad_id_tipo_seq
     CACHE 1;
 
 
-ALTER TABLE tipo_actividad_id_tipo_seq OWNER TO "Siradex";
+ALTER TABLE tipo_actividad_id_tipo_seq OWNER TO postgres;
 
 --
--- Name: tipo_actividad_id_tipo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Siradex
+-- Name: tipo_actividad_id_tipo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE tipo_actividad_id_tipo_seq OWNED BY tipo_actividad.id_tipo;
 
 
 --
--- Name: usuario; Type: TABLE; Schema: public; Owner: Siradex
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE usuario (
@@ -613,7 +609,7 @@ CREATE TABLE usuario (
 );
 
 
-ALTER TABLE usuario OWNER TO "Siradex";
+ALTER TABLE usuario OWNER TO postgres;
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: Siradex
@@ -644,70 +640,70 @@ ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permi
 
 
 --
--- Name: id_backup; Type: DEFAULT; Schema: public; Owner: Siradex
+-- Name: id_backup; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY backup ALTER COLUMN id_backup SET DEFAULT nextval('backup_id_backup_seq'::regclass);
 
 
 --
--- Name: id_campo; Type: DEFAULT; Schema: public; Owner: Siradex
+-- Name: id_campo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY campo ALTER COLUMN id_campo SET DEFAULT nextval('campo_id_campo_seq'::regclass);
 
 
 --
--- Name: id_campo_cat; Type: DEFAULT; Schema: public; Owner: Siradex
+-- Name: id_campo_cat; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY campo_catalogo ALTER COLUMN id_campo_cat SET DEFAULT nextval('campo_catalogo_id_campo_cat_seq'::regclass);
 
 
 --
--- Name: id_catalogo; Type: DEFAULT; Schema: public; Owner: Siradex
+-- Name: id_catalogo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY catalogo ALTER COLUMN id_catalogo SET DEFAULT nextval('catalogo_id_catalogo_seq'::regclass);
 
 
 --
--- Name: id_comprobante; Type: DEFAULT; Schema: public; Owner: Siradex
+-- Name: id_comprobante; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY comprobante ALTER COLUMN id_comprobante SET DEFAULT nextval('comprobante_id_comprobante_seq'::regclass);
 
 
 --
--- Name: id_jefe; Type: DEFAULT; Schema: public; Owner: Siradex
+-- Name: id_jefe; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY jefe_dependencia ALTER COLUMN id_jefe SET DEFAULT nextval('jefe_dependencia_id_jefe_seq'::regclass);
 
 
 --
--- Name: id_producto; Type: DEFAULT; Schema: public; Owner: Siradex
+-- Name: id_producto; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY producto ALTER COLUMN id_producto SET DEFAULT nextval('producto_id_producto_seq'::regclass);
 
 
 --
--- Name: id_programa; Type: DEFAULT; Schema: public; Owner: Siradex
+-- Name: id_programa; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY programa ALTER COLUMN id_programa SET DEFAULT nextval('programa_id_programa_seq'::regclass);
 
 
 --
--- Name: id_tipo; Type: DEFAULT; Schema: public; Owner: Siradex
+-- Name: id_tipo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY tipo_actividad ALTER COLUMN id_tipo SET DEFAULT nextval('tipo_actividad_id_tipo_seq'::regclass);
 
 
 --
--- Data for Name: act_posee_campo; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: act_posee_campo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY act_posee_campo (id_tipo_act, id_campo) FROM stdin;
@@ -775,32 +771,22 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 1, false);
 
 
 --
--- Data for Name: backup; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: backup; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY backup (id_backup, descripcion, fecha) FROM stdin;
-11	fassdsa	2016-11-09
-12	asa	2016-11-09
-13	aassd	2016-11-09
-14	asad	2016-11-09
-15	sasa	2016-11-09
-16	sdcdass	2016-11-09
-17	asdsadas	2016-11-09
-18	dadadaad	2016-11-09
-19	dsssd	2016-11-09
-20	holk	2016-11-10
 \.
 
 
 --
--- Name: backup_id_backup_seq; Type: SEQUENCE SET; Schema: public; Owner: Siradex
+-- Name: backup_id_backup_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('backup_id_backup_seq', 20, true);
+SELECT pg_catalog.setval('backup_id_backup_seq', 1, false);
 
 
 --
--- Data for Name: campo; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: campo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY campo (id_campo, id_catalogo, nombre, tipo_campo, obligatorio) FROM stdin;
@@ -808,44 +794,48 @@ COPY campo (id_campo, id_catalogo, nombre, tipo_campo, obligatorio) FROM stdin;
 
 
 --
--- Data for Name: campo_catalogo; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: campo_catalogo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY campo_catalogo (id_campo_cat, id_catalogo, nombre, tipo_campo, obligatorio) FROM stdin;
+2	3	Pasantía	Texto Largo	\N
+3	2	Prometheus	Documento	t
 \.
 
 
 --
--- Name: campo_catalogo_id_campo_cat_seq; Type: SEQUENCE SET; Schema: public; Owner: Siradex
+-- Name: campo_catalogo_id_campo_cat_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('campo_catalogo_id_campo_cat_seq', 1, false);
+SELECT pg_catalog.setval('campo_catalogo_id_campo_cat_seq', 3, true);
 
 
 --
--- Name: campo_id_campo_seq; Type: SEQUENCE SET; Schema: public; Owner: Siradex
+-- Name: campo_id_campo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('campo_id_campo_seq', 1, false);
 
 
 --
--- Data for Name: catalogo; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: catalogo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY catalogo (id_catalogo, nro_campos, nombre) FROM stdin;
+2	\N	Prometheus
+3	\N	Prueba
 \.
 
 
 --
--- Name: catalogo_id_catalogo_seq; Type: SEQUENCE SET; Schema: public; Owner: Siradex
+-- Name: catalogo_id_catalogo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('catalogo_id_catalogo_seq', 1, false);
+SELECT pg_catalog.setval('catalogo_id_catalogo_seq', 3, true);
 
 
 --
--- Data for Name: comprobante; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: comprobante; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY comprobante (id_comprobante, archivo, descripcion, producto) FROM stdin;
@@ -853,14 +843,14 @@ COPY comprobante (id_comprobante, archivo, descripcion, producto) FROM stdin;
 
 
 --
--- Name: comprobante_id_comprobante_seq; Type: SEQUENCE SET; Schema: public; Owner: Siradex
+-- Name: comprobante_id_comprobante_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('comprobante_id_comprobante_seq', 1, false);
+SELECT pg_catalog.setval('comprobante_id_comprobante_seq', 1, true);
 
 
 --
--- Data for Name: gestiona_catalogo; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: gestiona_catalogo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY gestiona_catalogo (id_jefe, id_catalogo) FROM stdin;
@@ -868,7 +858,7 @@ COPY gestiona_catalogo (id_jefe, id_catalogo) FROM stdin;
 
 
 --
--- Data for Name: gestiona_tipo_act; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: gestiona_tipo_act; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY gestiona_tipo_act (id_jefe, id_tipo_act) FROM stdin;
@@ -876,7 +866,7 @@ COPY gestiona_tipo_act (id_jefe, id_tipo_act) FROM stdin;
 
 
 --
--- Data for Name: jefe_dependencia; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: jefe_dependencia; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY jefe_dependencia (id_jefe, usbid_usuario) FROM stdin;
@@ -884,14 +874,14 @@ COPY jefe_dependencia (id_jefe, usbid_usuario) FROM stdin;
 
 
 --
--- Name: jefe_dependencia_id_jefe_seq; Type: SEQUENCE SET; Schema: public; Owner: Siradex
+-- Name: jefe_dependencia_id_jefe_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('jefe_dependencia_id_jefe_seq', 1, false);
 
 
 --
--- Data for Name: log_siradex; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: log_siradex; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY log_siradex (accion, accion_fecha, accion_ip, descripcion, usbid_usuario) FROM stdin;
@@ -899,7 +889,7 @@ COPY log_siradex (accion, accion_fecha, accion_ip, descripcion, usbid_usuario) F
 
 
 --
--- Data for Name: participa_producto; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: participa_producto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY participa_producto (usbid_usuario, id_producto) FROM stdin;
@@ -907,7 +897,7 @@ COPY participa_producto (usbid_usuario, id_producto) FROM stdin;
 
 
 --
--- Data for Name: permisos_tipo_act; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: permisos_tipo_act; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY permisos_tipo_act (permiso, id_tipo) FROM stdin;
@@ -915,7 +905,7 @@ COPY permisos_tipo_act (permiso, id_tipo) FROM stdin;
 
 
 --
--- Data for Name: producto; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: producto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY producto (id_producto, id_tipo, nombre, descripcion, estado, evaluacion_criterio, evaluacion_valor, fecha_realizacion, fecha_modificacion, lugar, usbid_usu_modificador, usbid_usu_creador) FROM stdin;
@@ -923,14 +913,14 @@ COPY producto (id_producto, id_tipo, nombre, descripcion, estado, evaluacion_cri
 
 
 --
--- Name: producto_id_producto_seq; Type: SEQUENCE SET; Schema: public; Owner: Siradex
+-- Name: producto_id_producto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('producto_id_producto_seq', 1, false);
+SELECT pg_catalog.setval('producto_id_producto_seq', 3, true);
 
 
 --
--- Data for Name: producto_tiene_campo; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: producto_tiene_campo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY producto_tiene_campo (id_prod, id_campo, valor_campo) FROM stdin;
@@ -938,49 +928,55 @@ COPY producto_tiene_campo (id_prod, id_campo, valor_campo) FROM stdin;
 
 
 --
--- Data for Name: programa; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: programa; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY programa (id_programa, nombre, abreviacion, descripcion, papelera, modif_fecha, usbid_usu_modificador) FROM stdin;
-1	sdada	dasdas	dasda	f	\N	\N
+2	Programa Igualdad de Oportunidades	PIO	Académico	f	2016-11-17	10-10800
 \.
 
 
 --
--- Name: programa_id_programa_seq; Type: SEQUENCE SET; Schema: public; Owner: Siradex
+-- Name: programa_id_programa_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('programa_id_programa_seq', 1, true);
+SELECT pg_catalog.setval('programa_id_programa_seq', 2, true);
 
 
 --
--- Data for Name: tipo_actividad; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: tipo_actividad; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY tipo_actividad (id_tipo, nombre, tipo_p_r, descripcion, id_programa, validacion, producto, nro_campos, id_jefe_creador, usbid_usuario_propone, papelera, modif_fecha) FROM stdin;
-1	asda	R	dsasa	1	True	\N	\N	\N	\N	f	\N
+1	Documentación	P	Copiar Las Pruebas	2	True	\N	\N	\N	\N	f	\N
 \.
 
 
 --
--- Name: tipo_actividad_id_tipo_seq; Type: SEQUENCE SET; Schema: public; Owner: Siradex
+-- Name: tipo_actividad_id_tipo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('tipo_actividad_id_tipo_seq', 1, true);
 
 
 --
--- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: Siradex
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY usuario (ci, usbid, nombres, apellidos, telefono, correo_inst, correo_alter, tipo) FROM stdin;
+21467704	10-10290	Arleyn Yoandra	Goncalves Lorca	\N	10-10290@usb.ve	\N	Usuario
+23631712	12-10515	Francisco Alberto	Rojas Key	\N	12-10515@usb.ve	\N	Administrador
+20839271	11-10576	Leonardo Rafael	Martinez Azuaje	\N	11-10576@usb.ve	\N	Administrador
+20799009	09-11237	Cinthya Carolina	Ramos Gomez	\N	09-11237@usb.ve	\N	Administrador
+21099355	10-11121	Edward Antonio	Fernandez Silva	\N	10-11121@usb.ve	\N	DEX
 20975940	11-11020	Sergio Alejandro	Teran Zambrano	\N	11-11020@usb.ve	\N	Administrador
-24272072	12-10941	 Norelys Marian\n	 Rumbos Carrasco\n		12-10941@usb.ve		Administrador
+19720548	10-10800	Jose Manuel	Barrientos Linares	\N	10-10800@usb.ve	\N	Administrador
+25367182	12-11402	Georvic Alejandro	Tur Rojas	\N	12-11402@usb.ve	\N	Administrador
 \.
 
 
 --
--- Name: auth_cas_pkey; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: auth_cas_pkey; Type: CONSTRAINT; Schema: public; Owner: Siradex; Tablespace: 
 --
 
 ALTER TABLE ONLY auth_cas
@@ -988,7 +984,7 @@ ALTER TABLE ONLY auth_cas
 
 
 --
--- Name: auth_event_pkey; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: auth_event_pkey; Type: CONSTRAINT; Schema: public; Owner: Siradex; Tablespace: 
 --
 
 ALTER TABLE ONLY auth_event
@@ -996,7 +992,7 @@ ALTER TABLE ONLY auth_event
 
 
 --
--- Name: auth_membership_pkey; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: auth_membership_pkey; Type: CONSTRAINT; Schema: public; Owner: Siradex; Tablespace: 
 --
 
 ALTER TABLE ONLY auth_membership
@@ -1004,7 +1000,7 @@ ALTER TABLE ONLY auth_membership
 
 
 --
--- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: Siradex; Tablespace: 
 --
 
 ALTER TABLE ONLY auth_permission
@@ -1012,7 +1008,7 @@ ALTER TABLE ONLY auth_permission
 
 
 --
--- Name: pk_act_posee_campo; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_act_posee_campo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY act_posee_campo
@@ -1020,7 +1016,7 @@ ALTER TABLE ONLY act_posee_campo
 
 
 --
--- Name: pk_backup; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_backup; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY backup
@@ -1028,7 +1024,7 @@ ALTER TABLE ONLY backup
 
 
 --
--- Name: pk_campo; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_campo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY campo
@@ -1036,7 +1032,7 @@ ALTER TABLE ONLY campo
 
 
 --
--- Name: pk_campo_catalago; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_campo_catalago; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY campo_catalogo
@@ -1044,7 +1040,7 @@ ALTER TABLE ONLY campo_catalogo
 
 
 --
--- Name: pk_catalogo; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_catalogo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY catalogo
@@ -1052,7 +1048,7 @@ ALTER TABLE ONLY catalogo
 
 
 --
--- Name: pk_comprobante; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_comprobante; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY comprobante
@@ -1060,7 +1056,7 @@ ALTER TABLE ONLY comprobante
 
 
 --
--- Name: pk_gestiona_catalogo; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_gestiona_catalogo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY gestiona_catalogo
@@ -1068,7 +1064,7 @@ ALTER TABLE ONLY gestiona_catalogo
 
 
 --
--- Name: pk_gestiona_tipo_act; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_gestiona_tipo_act; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY gestiona_tipo_act
@@ -1076,7 +1072,7 @@ ALTER TABLE ONLY gestiona_tipo_act
 
 
 --
--- Name: pk_jefe_dependencia; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_jefe_dependencia; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY jefe_dependencia
@@ -1084,7 +1080,7 @@ ALTER TABLE ONLY jefe_dependencia
 
 
 --
--- Name: pk_log; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_log; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY log_siradex
@@ -1092,7 +1088,7 @@ ALTER TABLE ONLY log_siradex
 
 
 --
--- Name: pk_participa_act; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_participa_act; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY participa_producto
@@ -1100,7 +1096,7 @@ ALTER TABLE ONLY participa_producto
 
 
 --
--- Name: pk_permisos_tipo_act; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_permisos_tipo_act; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY permisos_tipo_act
@@ -1108,7 +1104,7 @@ ALTER TABLE ONLY permisos_tipo_act
 
 
 --
--- Name: pk_producto; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_producto; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY producto
@@ -1116,7 +1112,7 @@ ALTER TABLE ONLY producto
 
 
 --
--- Name: pk_programa; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_programa; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY programa
@@ -1124,7 +1120,7 @@ ALTER TABLE ONLY programa
 
 
 --
--- Name: pk_tiene_campo; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_tiene_campo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY producto_tiene_campo
@@ -1132,7 +1128,7 @@ ALTER TABLE ONLY producto_tiene_campo
 
 
 --
--- Name: pk_tipo_actividad; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_tipo_actividad; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY tipo_actividad
@@ -1140,7 +1136,7 @@ ALTER TABLE ONLY tipo_actividad
 
 
 --
--- Name: pk_usuario; Type: CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: pk_usuario; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY usuario
@@ -1148,7 +1144,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- Name: fk_act_posee_campo_id_campo; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_act_posee_campo_id_campo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY act_posee_campo
@@ -1156,7 +1152,7 @@ ALTER TABLE ONLY act_posee_campo
 
 
 --
--- Name: fk_act_posee_campo_id_tipo_act; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_act_posee_campo_id_tipo_act; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY act_posee_campo
@@ -1164,7 +1160,7 @@ ALTER TABLE ONLY act_posee_campo
 
 
 --
--- Name: fk_campo_catalogo_id_catalogo; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_campo_catalogo_id_catalogo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY campo_catalogo
@@ -1172,7 +1168,7 @@ ALTER TABLE ONLY campo_catalogo
 
 
 --
--- Name: fk_campo_id_catalogo; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_campo_id_catalogo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY campo
@@ -1180,7 +1176,7 @@ ALTER TABLE ONLY campo
 
 
 --
--- Name: fk_gestiona_catalogo_id_catalogo; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_gestiona_catalogo_id_catalogo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY gestiona_catalogo
@@ -1188,7 +1184,7 @@ ALTER TABLE ONLY gestiona_catalogo
 
 
 --
--- Name: fk_gestiona_catalogo_id_jefe; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_gestiona_catalogo_id_jefe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY gestiona_catalogo
@@ -1196,7 +1192,7 @@ ALTER TABLE ONLY gestiona_catalogo
 
 
 --
--- Name: fk_gestiona_tipo_act_id_jefe; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_gestiona_tipo_act_id_jefe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY gestiona_tipo_act
@@ -1204,7 +1200,7 @@ ALTER TABLE ONLY gestiona_tipo_act
 
 
 --
--- Name: fk_gestiona_tipo_act_id_tipo_act; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_gestiona_tipo_act_id_tipo_act; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY gestiona_tipo_act
@@ -1212,7 +1208,7 @@ ALTER TABLE ONLY gestiona_tipo_act
 
 
 --
--- Name: fk_jefe_dependencia_usbid_usuario; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_jefe_dependencia_usbid_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY jefe_dependencia
@@ -1220,7 +1216,7 @@ ALTER TABLE ONLY jefe_dependencia
 
 
 --
--- Name: fk_log_usbid_usuario; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_log_usbid_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY log_siradex
@@ -1228,7 +1224,7 @@ ALTER TABLE ONLY log_siradex
 
 
 --
--- Name: fk_participa_act_id_producto; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_participa_act_id_producto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY participa_producto
@@ -1236,7 +1232,7 @@ ALTER TABLE ONLY participa_producto
 
 
 --
--- Name: fk_participa_act_usbid_usuario; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_participa_act_usbid_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY participa_producto
@@ -1244,7 +1240,7 @@ ALTER TABLE ONLY participa_producto
 
 
 --
--- Name: fk_permisos_tipo_act_id_tipo; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_permisos_tipo_act_id_tipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY permisos_tipo_act
@@ -1252,7 +1248,7 @@ ALTER TABLE ONLY permisos_tipo_act
 
 
 --
--- Name: fk_producto_id_tipo; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_producto_id_tipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY producto
@@ -1260,7 +1256,7 @@ ALTER TABLE ONLY producto
 
 
 --
--- Name: fk_producto_producto; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_producto_producto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY comprobante
@@ -1268,7 +1264,7 @@ ALTER TABLE ONLY comprobante
 
 
 --
--- Name: fk_producto_usbid_usu_creador; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_producto_usbid_usu_creador; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY producto
@@ -1276,7 +1272,7 @@ ALTER TABLE ONLY producto
 
 
 --
--- Name: fk_producto_usbid_usu_modificador; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_producto_usbid_usu_modificador; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY producto
@@ -1284,7 +1280,7 @@ ALTER TABLE ONLY producto
 
 
 --
--- Name: fk_programa_usbid_usu_modificador; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_programa_usbid_usu_modificador; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY programa
@@ -1292,7 +1288,7 @@ ALTER TABLE ONLY programa
 
 
 --
--- Name: fk_tiene_campo_id_campo; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_tiene_campo_id_campo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY producto_tiene_campo
@@ -1300,7 +1296,7 @@ ALTER TABLE ONLY producto_tiene_campo
 
 
 --
--- Name: fk_tiene_campo_id_producto; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_tiene_campo_id_producto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY producto_tiene_campo
@@ -1308,7 +1304,7 @@ ALTER TABLE ONLY producto_tiene_campo
 
 
 --
--- Name: fk_tipo_actividad_id_jefe_creador; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_tipo_actividad_id_jefe_creador; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY tipo_actividad
@@ -1316,7 +1312,7 @@ ALTER TABLE ONLY tipo_actividad
 
 
 --
--- Name: fk_tipo_actividad_id_programa; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_tipo_actividad_id_programa; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY tipo_actividad
@@ -1324,7 +1320,7 @@ ALTER TABLE ONLY tipo_actividad
 
 
 --
--- Name: fk_tipo_actividad_usbid_usuario_propone; Type: FK CONSTRAINT; Schema: public; Owner: Siradex
+-- Name: fk_tipo_actividad_usbid_usuario_propone; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY tipo_actividad
