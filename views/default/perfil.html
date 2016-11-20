@@ -9,59 +9,56 @@
 
 {{block descripcion}}
     <div class="row" style="height: 25em;"> 
-        <div class="col-lg-12">
-        <!-- Datos del usuario -->
+      <div class="col-lg-12">
+        <!-- usuario -->
         <div class="col-md-6 " style="margin-top: 6em;">
-                <!-- Nombre del usuario -->
-    <h1>
-        
-    {{=session.usuario['first_name'].split(' ')[0]}} {{=session.usuario['last_name'].split(' ')[0]}}
+          <!-- Nombre del usuario -->
+          <h1>
+            {{=session.usuario['first_name'].split(' ')[0]}} {{=session.usuario['last_name'].split(' ')[0]}}
 
-    <!-- icono editar -->
-        
-    <a id="editar" href="{{=URL('EditarPerfil')}}" >
-    <!-- {{=IMG(_src=URL('static', 'icon', args='i_edit.png'),_style='max-height:1em') }}-->
-    <span class="glyphicon glyphicon-edit green-icn"></span>
-    </a>
-    </h1>
-            <p class="text-justify">
-                <b>Nombre completo:</b> {{=session.usuario['first_name']}} {{=session.usuario['last_name']}}
-                <br>
-                {{try:}}
-                {{if session.usuario['dpto'] != None:}}
-                <b>Departamento: </b>{{=session.usuario['dpto']}}
-                {{pass}}
-                <br>
-                {{except:}}
-                {{try:}}
-                {{if session.usuario['carrera'] != None:}}
-                <b>Carrera: </b>{{=session.usuario['carrera']}}
-                {{pass}}
-                <br>
-                {{except:}}
-                {{pass}}
-                {{pass}}
-                <b>Usbid:</b> {{=session.usuario['usbid']}}
-                <br>
-                <b>Cedula:</b> {{=session.usuario['cedula']}}
-                <br>
-                <b>Correo:</b> {{=session.usuario['usbid']+"@usb.ve"}}
-                <br>
-                {{ if session.usuario['alternativo'] != None:}}
-                <b>Correo alternativo:</b> {{=session.usuario['alternativo']}}
-                <br>
-                {{pass}}
-                {{if session.usuario['phone'] != None:}}
-                <b>Telefono:</b> {{=session.usuario['phone']}}
-                {{pass}}
-                <br>
+            <!-- icono editar -->       
+            <a id="editar" href="{{=URL('EditarPerfil')}}" >
+            <!-- {{=IMG(_src=URL('static', 'icon', args='i_edit.png'),_style='max-height:1em') }}-->
+            <span class="glyphicon glyphicon-edit green-icn"></span>
+            </a>
+          </h1>
 
-            </p>
-        </div>  
+          <!-- datos del usuario -->
+          <p class="text-justify">
+            <b>Nombre completo:</b> {{=session.usuario['first_name']}} {{=session.usuario['last_name']}}
+            <br>
+            {{try:}}
+            {{if session.usuario['dpto'] != None:}}
+            <b>Departamento: </b>{{=session.usuario['dpto']}}
+            {{pass}}
+            <br>
+            {{except:}}
+            {{try:}}
+            {{if session.usuario['carrera'] != None:}}
+            <b>Carrera: </b>{{=session.usuario['carrera']}}
+            {{pass}}
+            <br>
+            {{except:}}
+            {{pass}}
+            {{pass}}
+            <b>Usbid:</b> {{=session.usuario['usbid']}}
+            <br>
+            <b>Cedula:</b> {{=session.usuario['cedula']}}
+            <br>
+            <b>Correo:</b> {{=session.usuario['usbid']+"@usb.ve"}}
+            <br>
+            {{ if session.usuario['alternativo'] != None:}}
+            <b>Correo alternativo:</b> {{=session.usuario['alternativo']}}
+            <br>
+            {{pass}}
+            {{if session.usuario['phone'] != None:}}
+            <b>Telefono:</b> {{=session.usuario['phone']}}
+            {{pass}}
+            <br>
+          </p>
+        </div>
+
         <div class="col-md-6">
-            
-            <!-- <b>Mis Productos</b>
-            <br> -->
             <embed type="image/svg+xml" src="{{=grafica }}" />
         </div>
         </div>
@@ -69,22 +66,25 @@
 {{end}}
 
 {{block contenido}}
-        <div class="row">
-            <div class="col-md-4" style="margin-left: 42.99em;">
-                
-        <a href="{{=URL(c='producto',f='gestionar')}}">        
-            <button type="button" class="btn btn-default green btn-border center-block" data-toggle="modal" data-target="#myModal">
-                Ver Todas Mis Actividades
-            </button>
-        </a>
-            </div>
-        </div>
-        <br>
-    <div class="row">
-        <div class="col-md-12">
-        <!-- Nav tabs -->
-        <div class="card">
-        <ul class="nav nav-tabs" role="tablist">
+  <!-- boton -->
+  <div class="row">
+    <div class="col-md-4" style="margin-left: 42.99em;">
+        
+      <a href="{{=URL(c='producto',f='gestionar')}}">        
+          <button type="button" class="btn btn-default green btn-border center-block" data-toggle="modal" data-target="#myModal">
+              Ver Todas Mis Actividades
+          </button>
+      </a>
+    </div>
+  </div>
+  <br>
+
+  <!-- tabla -->
+  <div class="row">
+    <div class="col-md-12">
+    <!-- Nav tabs -->
+    <div class="card">
+      <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active act">
             <a  href="#activas" 
                 aria-controls="activas" 
@@ -111,10 +111,10 @@
                 No Validados
             </a>
         </li>
-        </ul>
+      </ul>
 
-        <!-- Tab panes -->
-        <div class="tab-content">
+      <!-- Tab panes -->
+      <div class="tab-content">
         <!-- Validados -->
         <div role="tabpanel" class="tab-pane active" id="activas">
             {{if productos["Validados"]==[]:}}
@@ -167,33 +167,30 @@
             </table>
             {{pass}}
         </div>
-
-        </div>
-        </div>
-        </div>
-        </div>
-
+      </div>
+    </div>
+    </div>
+  </div>
 {{end}}                                    
 
 {{block script}}
+  <script>
+    $(document).ready(function(){
+      $("#dv-act").hide();
+      $("#dv-rec").hide();
+      $("#dv-esp").hide();
 
-    <script>
-        $(document).ready(function(){
-            $("#dv-act").hide();
-            $("#dv-rec").hide();
-            $("#dv-esp").hide();
+      $("#btn-act").click(function(){
+      $("#dv-act").toggle(300);
+          });
 
-            $("#btn-act").click(function(){
-            $("#dv-act").toggle(300);
-                });
+      $("#btn-rec").click(function(){
+      $("#dv-rec").toggle(300);
+          });
 
-            $("#btn-rec").click(function(){
-            $("#dv-rec").toggle(300);
-                });
-
-            $("#btn-esp").click(function(){
-            $("#dv-esp").toggle(300);
-                });                            
-            });
-    </script>
+      $("#btn-esp").click(function(){
+      $("#dv-esp").toggle(300);
+          });                            
+    });
+  </script>
 {{end}}

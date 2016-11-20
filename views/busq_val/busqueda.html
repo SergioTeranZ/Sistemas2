@@ -10,68 +10,188 @@
 
 
 {{block contenido}}
-            <div class="tab-content card">
-                <!-- Espera -->
-                <div role="tabpanel" class="tab-pane active" id="esp">
-                    {{if len(productos) == 0:}}
-                        No hay actividades 
-                    {{else:}}
-                        <table class="table table-striped table-condensed table-hover sortable">
-                            <thead>
-                            <tr>
-                                <th>Nombre Producto</th>
-                                <th>Descripcion</th>
-                                <th>Tipo Producto</th>
-                                <th><center>Mostrar</center></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {{for producto in productos: }}
-                                   
-                                    <tr>
-                                        <td class="detalles">
-                                            {{=producto[1]}}
-                                        </td>
+<style type="text/css">
+  embed{
+    max-height: 20em;
+  }
+</style>
 
-                                        <td class="detalles">
-                                            {{=producto[0]}}
-                                        </td>
+<h2>Graficas
+  <span class="glyphicon glyphicon-eye-close" id="ocultar_graficas"></span>
+  <span class="glyphicon glyphicon-eye-open" id="ver_graficas" style="display: none;"></span></h2>
+<div class="row graficas">
+  <div class="col-md-4"  >  
+    <div class="tab-content card" style="text-align: center;">
+      <embed type="image/svg+xml" src="{{=graficaPie }}" />
+     <button type="button" id="btn-pieChart" class="btn btn-default green btn-border" data-toggle="modal" data-target="#modalPie" style="margin-top: -5em;">
+      <span class="glyphicon glyphicon-resize-full"></span> Aumentar
+    </button>
+    </div>
+  </div>
 
-                                         <td class="detalles">
-                                            {{=producto[2]}}
-                                        </td>                                           
-                                            
-                                        <td>
-                                            <a href="{{=URL(f='ver_producto', args=[producto[3]])}}">
-                                                <center><span class="glyphicon glyphicon-eye-open" style="color:#9E9E9E"></span></center>
-                                            </a>
-                                        </td>
-                                        {{pass}}
-                                    </tr>
-                                {{pass}}
-                            </tbody>
-                        </table>
-        <div class="text-center">
+  <div class="col-md-4">  
+    <div class="tab-content card"  style="text-align: center;">
+      <embed type="image/svg+xml" src="{{=graficaBar }}" />
+      <button type="button" id="btn-barChart" class="btn btn-default green btn-border" data-toggle="modal" data-target="#modalBar" style="margin-top: -5em;">
+        <span class="glyphicon glyphicon-resize-full"></span> Aumentar
+      </button>      
+    </div>
+  </div>
+
+  <div class="col-md-4">  
+    <div class="tab-content card"  style="text-align: center;">
+      <embed type="image/svg+xml" src="{{=graficaLine }}" />
+      <button type="button" id="btn-barLine" class="btn btn-default green btn-border" data-toggle="modal" data-target="#modalLine" style="margin-top: -5em;">
+        <span class="glyphicon glyphicon-resize-full"></span> Aumentar
+      </button>        
+    </div>
+  </div>
+</div>
+<h2>Actividades</h2>
+  <div class="tab-content card">
+
+    <div role="tabpanel" class="tab-pane active" id="esp">
+      {{try:}}
+      {{if len(productos) == 0:}}
+        No hay actividades 
+      {{else:}}
+        <table class="table table-striped table-condensed table-hover sortable">
+          <thead>
+          <tr>
+            <th>Nombre Producto</th>
+            <th>Descripcion</th>
+            <th>Tipo Producto</th>
+            <th><center>Mostrar</center></th>
+          </tr>
+          </thead>
+          <tbody>
+          {{for producto in productos: }}
+            <tr>
+                <td class="detalles">
+                    {{=producto[1]}}
+                </td>
+
+                <td class="detalles">
+                    {{=producto[0]}}
+                </td>
+
+                 <td class="detalles">
+                    {{=producto[2]}}
+                </td>                                           
+                    
+                <td>
+                    <a href="{{=URL(f='ver_producto', args=[producto[3]])}}">
+                        <center><span class="glyphicon glyphicon-eye-open" style="color:#9E9E9E"></span></center>
+                    </a>
+                </td>
+            </tr>
+          {{pass}}
+          </tbody>
+        </table>
+      {{pass}}
+      {{except:}}
+      No se ha realizado niguna busqueda
+      {{pass}}
+    <div class="text-center">
       <ul class="pagination pagination-lg pager" id="myPager"></ul>
+    </div>
+    {{pass}}
+  </div>
+
+
+<!-- Modal 1 -->
+<div id="modalPie" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><center>Grafica de Torta</center></h4>
       </div>
-                    {{pass}}
-                </div>  
+      <div class="modal-body">
+        <embed type="image/svg+xml" src="{{=graficaPie }}" style="max-height: 100%" />
+        
+      </div>
+      <div class="modal-footer">
+      <center>
+        <button type="button" class="btn btn-default green btn-border " data-dismiss="modal">
+        <span class="glyphicon glyphicon-resize-small"></span>
+        Cerrar</button>
+        </center>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal 2 -->
+<div id="modalBar" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><center>Grafica de Barra</center></h4>
+      </div>
+      <div class="modal-body">
+        <embed type="image/svg+xml" src="{{=graficaBar }}" style="max-height: 100%" />
+      </div>
+      <div class="modal-footer">
+      <center>
+        <button type="button" class="btn btn-default green btn-border " data-dismiss="modal">
+        <span class="glyphicon glyphicon-resize-small"></span>
+        Cerrar</button>
+        </center>
+      </div>
+    </div>
+
+  </div>
+</div>  
+
+<!-- Modal 3 -->
+<div id="modalLine" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><center>Grafica de Lineas</center></h4>
+      </div>
+      <div class="modal-body">
+        <embed type="image/svg+xml" src="{{=graficaLine }}" style="max-height: 100%" />
+      </div>
+      <div class="modal-footer">
+      <center>
+        <button type="button" class="btn btn-default green btn-border " data-dismiss="modal">
+        <span class="glyphicon glyphicon-resize-small"></span>
+        Cerrar</button>
+        </center>
+      </div>
+    </div>
+
+  </div>
+</div> 
 {{end}}
 
-{{block footer}}
-    <div id="footer" class="container-fluid">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-{{end}}
 
 {{block script}}
     <script>
         $(document).ready(function(){
-            $("#filtros").hide();
-            $("#btn-filtro").click(function(){
-            $("#filtros").toggle(300);
-                });
+            $("#ocultar_graficas").click(function(){
+              $("#ocultar_graficas").hide();
+              $("#ver_graficas").show();
+              $(".graficas").toggle(300);
             });
+
+            $("#ver_graficas").click(function(){
+              $("#ver_graficas").hide();
+              $("#ocultar_graficas").show();
+              $(".graficas").toggle(300);
+            });                          
+        });
 
     </script>
 

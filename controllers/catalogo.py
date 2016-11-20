@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from funciones_siradex2 import get_tipo_usuario
+from funciones_siradex import get_tipo_usuario
 
 tipo_campos = ['Fecha', 'Telefono', 'Texto Corto','Documento','Cantidad Entera','Cantidad Decimal', 'Texto Largo', 'Cedula']
+
 
 '''
 Funcion que se encarga de obtener los datos para mostrar los catalogos
@@ -9,7 +10,11 @@ que existen en el sistema.
 '''
 
 def vGestionarCatalogos():
+
     admin = get_tipo_usuario(session)
+
+    if (admin==0):
+        redirect(URL(c ="default",f="index"))
 
     #Si hay que agregar un campo a un catalogo
 
@@ -144,6 +149,12 @@ uno con el mismo nombre, se encarga de crearlo y almacenarlo
 en la base de datos.
 '''
 def AgregarCatalogo():
+
+    admin = get_tipo_usuario(session)
+
+    if (admin==0):
+        redirect(URL(c ="default",f="index"))
+
     formulario = SQLFORM.factory(
                         Field('nombre',
                               requires = [IS_NOT_EMPTY(error_message='El nombre del catalogo no puede quedar vacio.'),
@@ -159,6 +170,11 @@ Funcion que se encarga de mostrar los campos del catalogo,
 permite crear y elminiar campos relacionados con el catalogo indicado.
 '''
 def AgregarCampo():
+
+    admin = get_tipo_usuario(session)
+
+    if (admin==0):
+        redirect(URL(c ="default",f="index"))
 
     # Genero formulario para los campos
     formulario = SQLFORM.factory(
@@ -185,6 +201,11 @@ que este posee y todas las relaciones entre ellos.
 '''
 def eliminarCatalogo():
 
+    admin = get_tipo_usuario(session)
+
+    if (admin==0):
+        redirect(URL(c ="default",f="index"))
+
     # Obtengo el id del Catalogo a eliminar
     id_catalogo = request.args[0]
 
@@ -208,6 +229,11 @@ Funcion que se encarga de modificar las caracteriticas de un
 campo de un catalogo.
 '''
 def EditarCampo():
+
+    admin = get_tipo_usuario(session)
+
+    if (admin==0):
+        redirect(URL(c ="default",f="index"))
 
     formulario = SQLFORM.factory(
                     Field('nombre',
@@ -234,6 +260,11 @@ del catalogo.
 '''
 def eliminarCampos():
 
+    admin = get_tipo_usuario(session)
+
+    if (admin==0):
+        redirect(URL(c ="default",f="index"))
+
     # Obtengo el id del campo que se eliminara
     id_campo_cat = request.args[0]
     id_catalogo  = db(db.CAMPO_CATALOGO.id_campo_cat == id_campo_cat).select().first().id_catalogo
@@ -245,6 +276,12 @@ def eliminarCampos():
     redirect(URL('vGestionarCatalogos',args=[id_catalogo]))
 
 def cambiarNombreCatalogo():
+
+    admin = get_tipo_usuario(session)
+
+    if (admin==0):
+        redirect(URL(c ="default",f="index"))
+
     formulario = SQLFORM.factory(
                         Field('nombre',
                               requires = [IS_NOT_EMPTY(error_message='El nombre del catalogo no puede quedar vacio.'),

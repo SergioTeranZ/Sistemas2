@@ -43,6 +43,7 @@
     <!--*********************************************
         MAIN
     *********************************************-->
+<<<<<<< HEAD
         <div class="container">
             <div clas="row">        
             <div id="degradado" class="col-md-10 col-md-offset-1">    
@@ -63,49 +64,68 @@
                         {{block navegacion}}
                         {{end}}
                     </header>
+=======
+      <div class="container">
+          <div clas="row">        
+          <div id="degradado" class="col-md-10 col-md-offset-1">    
+            <!--*********************************************
+                HEADER
+            **********************************************--> 
+              <header>   
+                  <!--*********************************************
+                      Banner SiraDex
+                  **********************************************--> 
+                      <!---->
+                      {{=IMG(_src=URL('static', 'images', args='banner.jpg')) }} 
+
+                  <!--*********************************************
+                      Navegacion
+                  **********************************************-->
+                  {{block navegacion}}
+                  {{end}}
+              </header>
+            <!--*********************************************
+                CONTENIDO PAGINA
+            **********************************************-->
+              <section id = "contenido">
+>>>>>>> 079216d173498d9c2df2d9f2398ee5a7cb2ae167
                 <!--*********************************************
-                    CONTENIDO PAGINA
+                    Titulo
                 **********************************************-->
-                    <section id = "contenido">
-                        <!--*********************************************
-                            Titulo
-                        **********************************************-->
-                            <h1 id="titulo">
-                                {{block titulo}}
-                                {{end}}
-                            </h1>
-                            <h2 id="subtitulo">
-                                {{block subtitulo}}
-                                {{end}}
-                            </h2>
+                  <h1 id="titulo">
+                    {{block titulo}}
+                    {{end}}
+                  </h1>
 
-                        <!--*********************************************
-                            Descripcion pagina
-                        **********************************************-->
-                                {{block descripcion}}
-                                {{end}}
+                  <h2 id="subtitulo">
+                    {{block subtitulo}}
+                    {{end}}
+                  </h2>
 
-                        <!--*********************************************
-                            Contenido
-                        **********************************************-->
-                            {{block contenido}}
-                            {{end}}
-                    </section>
-            </div>
-            </div>
-        </div>
+                <!--*********************************************
+                    Descripcion pagina
+                **********************************************-->
+                  {{block descripcion}}
+                  {{end}}
+
+                <!--*********************************************
+                    Contenido
+                **********************************************-->
+                  {{block contenido}}
+                  {{end}}
+              </section>
+          </div>
+          </div>
+      </div>
 
     <!--*********************************************
         FOOTER
     *********************************************-->
-    <div id="footer" class="container-fluid">
-                    
-                Sartenejas, Baruta, Edo. Miranda - Apartado 89000 Cable Unibolivar Caracas Venezuela. Teléfono +58 0212-9063111
-                <br>
-                Litoral. Camurí Grande, Edo. Vargas Parroquia Naiguatá. Teléfono +58 0212-9069000 
-                </div>
-            </div>
-        </div>      
+    <div id="footer" class="container-fluid">                  
+      Sartenejas, Baruta, Edo. Miranda - Apartado 89000 Cable Unibolivar Caracas Venezuela. Teléfono +58 0212-9063111
+      <br>
+      Litoral. Camurí Grande, Edo. Vargas Parroquia Naiguatá. Teléfono +58 0212-9069000 
+    </div>     
 
     <!--*********************************************
         JavaScript de bootstrap
