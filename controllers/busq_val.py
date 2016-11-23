@@ -4,49 +4,50 @@ from funciones_siradex import get_tipo_usuario,get_tipo_usuario_not_loged
 
 # Funcion para busquedas publicas
 def busqueda():
-
     admin = get_tipo_usuario_not_loged(session)
     try:
         graficaPie = URL('busq_val','graficaPie')
         graficaBar = URL('busq_val','graficaBar')
         graficaLine = URL('busq_val','graficaLine')
 
-        if request.vars.Programa == "all" and request.vars.TipoActividad == "all":
-            sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE nombre LIKE \'%" + request.vars.Producto \
-            + "%\' AND usbid_usu_creador IN (SELECT usbid FROM usuario WHERE nombres LIKE \'%" + request.vars.Autor + "%\') AND estado=\'Validado\';"
-            productos = db.executesql(sql)
-
-        elif request.vars.Programa != "all" and request.vars.TipoActividad == "all":
-            sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE nombre LIKE \'%" + request.vars.Producto \
-            + "%\' AND usbid_usu_creador IN (SELECT usbid FROM usuario WHERE nombres LIKE \'%" + request.vars.Autor\
-            + "%\') AND id_tipo IN (SELECT id_tipo FROM TIPO_ACTIVIDAD WHERE id_programa=" + str(request.vars.Programa)+ ") AND estado=\'Validado\';"
-
-            productos = db.executesql(sql)
-
-        elif request.vars.Programa == "all" and request.vars.TipoActividad != "all":
-            sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE nombre LIKE \'%" + request.vars.Producto \
-            + "%\' AND usbid_usu_creador IN (SELECT usbid FROM usuario WHERE nombres LIKE \'%" + request.vars.Autor\
-            + "%\') AND id_tipo=\'" + str(request.vars.TipoActividad) + "\' AND estado=\'Validado\';"
-
-            productos = db.executesql(sql)
-
-        elif request.vars.Programa == None and request.vars.TipoActividad == None:
-            if (session.usuario["tipo"] == "DEX" or session.usuario["tipo"] == "Administrador"):
-                sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE nombre LIKE \'%" + request.vars.Producto \
-                + "%\' ;"
-            elif (session.usuario["tipo"] == "Usuario"):
-                sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE nombre LIKE \'%" + request.vars.Producto \
-                + "%\' AND estado=\'Validado\';"
-
-            productos = db.executesql(sql)
+        if (request.vars.Producto == ""):
+            sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE nombre LIKE \'%" + request.vars.Producto + "%\'"
 
         else:
-            sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE nombre LIKE \'%" + request.vars.Producto \
-            + "%\' AND usbid_usu_creador IN (SELECT ci FROM usuario WHERE nombres LIKE \'%" + request.vars.Autor\
-            + "%\') AND id_tipo IN (SELECT id_tipo FROM TIPO_ACTIVIDAD WHERE id_programa=" + str(request.vars.Programa)\
-            + ") AND id_tipo=\'" + str(request.vars.TipoActividad) + "\' AND estado=\'Validado\';"
+            sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE plainto_tsquery('english','"+request.vars.Producto+"') @@ to_tsvector('english',coalesce(nombre,'') || ' '|| coalesce(descripcion,''))"
 
-            productos = db.executesql(sql)
+        if request.vars.Programa != None and\
+           request.vars.TipoActividad != None and\
+           request.vars.fecha != None and\
+           request.vars.Autor != None:
+        
+
+            # Anadimos el filtro del usuario T-T T-N N-T N-N
+            if request.vars.Autor != "all":
+                sql += " AND usbid_usu_creador = " + request.vars.Autor
+
+            # Anadimos el filtro del tipo de actividad
+            if request.vars.Programa != "all" and request.vars.TipoActividad == "all":
+                sql += " AND id_tipo IN (SELECT id_tipo FROM TIPO_ACTIVIDAD WHERE id_programa=" + str(request.vars.Programa)+ ")"
+
+            elif request.vars.TipoActividad != "all":
+                sql += " AND id_tipo=\'" + str(request.vars.TipoActividad)+"'"
+
+            # Anadimos el filtro de la fecha
+            if request.vars.fecha != "":
+                sql += " AND fecha_realizacion <= '" + request.vars.fecha +"'"
+
+        # Ahora dependiendo del usuario anadimos las restricciones del estado (no se contempla cuando
+        # el usuario esta bloqueado porqu no deberia llegar aqui)
+        if (session.usuario["tipo"] == "Usuario"):
+            sql += " AND estado=\'Validado\';"
+        elif (session.usuario["tipo"] == "DEX" or session.usuario["tipo"] == "Administrador"):
+            sql += ";"
+
+        print(sql)
+        productos = db.executesql(sql)
+
+        
 
         return locals()
     except:

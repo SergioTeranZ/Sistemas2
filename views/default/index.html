@@ -70,56 +70,68 @@
             </div>
         <br>
             <!-- Filtros -->
-            <div id="filtros">
-                <center>
+            <div id="filtros" class="form-group col-sm-offset-1 col-sm-9">
+                
                     <div role = "menu" class="tab-pane">
                         <!--Filtro de Programa-->
-                        <div class="form-group">
+                        <div class="form-group col-sm-12">
                             <label for="Programa"> Programas</label>
-                            <select name="Programa" 
-                                    class="form-control"
-                                    onchange="ajax('obtener_actividades', ['Programa'], ':eval')">
-                                
-                                <option value="all" selected="">--cualquiera--</option>
-                                
-                                {{for x in rows:}}
-                                    <option value="{{=x['id_programa']}}">{{=x['nombre']}}</option>
-                                {{pass}}
-                            </select>
+                            <div class = "col-sm-12">
+                                <select name="Programa" 
+                                        class="form-control"
+                                        onchange="ajax('{{=URL(c='default', f='obtener_actividades')}}', ['Programa'], ':eval')" style="width: 100%">
+                                    
+                                    <option value="all" selected="">--cualquiera--</option>
+                                    
+                                    {{for x in programas:}}
+                                        <option value="{{=x['id_programa']}}" style="width: 100%">{{=x['nombre']}}</option>
+                                    {{pass}}
+                                </select>
+                            </div>
                         </div>
 
                         <!-- Filtro de Tipo de Actividad -->
-                        <div class="form-group">
+                        <div class="form-group col-sm-12">
                             <label for="TipoActividad"> Tipo Actividad:</label>
-                            <select name="TipoActividad" 
-                                    class="form-control"
-                                    id="lista_tipos" >
-                                
-                                <option value="all" selected="">--cualquiera--</option>
-                                
-                                {{for x in rowsT:}}
-                                    <option value="{{=x['id_tipo']}}">{{=x['nombre']}}</option>
-                                {{pass}}
-                            </select>
-                        </div>
-                        
-                        <br>
-                        <br>
-                        
-                        <!-- Filtro de Fecha -->
-                        <div class="form-group">
-                            <label for="date">Fecha:</label>
-                            <input type="date" name="fecha" max='{{=fecha}}' id="focusedInput" class="form-control"/>
-
+                            <div class = "col-sm-12">
+                                <select name="TipoActividad" 
+                                        class="form-control"
+                                        id="lista_tipos" style="width: 100%">
+                                    
+                                    <option value="all" selected="">--cualquiera--</option>
+                                    
+                                    {{for x in actividades:}}
+                                        <option value="{{=x['id_tipo']}}" style="width: 100%">{{=x['nombre']}}</option>
+                                    {{pass}}
+                                </select>
+                            </div>
                         </div>
 
-                        <!-- Filtro de Autor -->
-                        <div class="form-group">
-                            <label for="Autor">Autor:</label>
-                            <input type="text" name="Autor" id="focusedInput" class="form-control"/>
+                        <div >
+                            <!-- Filtro de Fecha -->
+                            <div class="form-group col-sm-5">
+                                <label for="date">Fecha Tope:</label>
+                                <div class = "col-sm-12">
+                                    <input type="date" name="fecha" max='{{=fecha}}' id="focusedInput" class="form-control datepicker" style="width: 100%"/>
+                                </div>
+                            </div>
+
+                            <!-- Filtro de Autor -->
+                            <div class="form-group col-sm-7">
+                                <label for="Autor">Autor:</label>
+                                <div class = "col-sm-12">
+                                    <select name="Autor" class="form-control" style="width: 100%">
+                                        <option value="all" selected="">--cualquiera--</option>
+                                    
+                                        {{for x in usuarios:}}
+                                            <option value="{{=x['usbid']}}" style="width: 100%">{{=x['nombres'].split(' ',1)[0]+' '+x['apellidos'].split(' ',1)[0]}}</option>
+                                        {{pass}}
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </center>
+                
             </div>
     </form>        
 
@@ -138,7 +150,24 @@
             $("#btn-filtro").click(function(){
             $("#filtros").toggle(300);
                 });
+
+            $( ".datepicker" ).datepicker({ 
+                maxDate: -1,
+                dateFormat: "yy-mm-dd",
+                beforeShow: function() {
+                    setTimeout(function(){
+                        $('.ui-datepicker').css('z-index', 2);
+                    }, 0);
+                }
             });
+
+            var maxLength = 85;
+            $('select > option').text(function(i, c) {
+              if (c.length > maxLength) {
+                return c.substr(0, maxLength) + '...';  
+              }
+            });
+        });
 
     </script>
 {{end}}

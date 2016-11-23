@@ -222,22 +222,27 @@ def index():
     else:
         dia = "-" +  str(now.month)
     fecha = str(now.year) + mes + dia
-    rows = db(db.PROGRAMA.papelera == False).select().as_list()
-    rowsT = db(db.TIPO_ACTIVIDAD.papelera == False).select().as_list()
+    programas = db(db.PROGRAMA.papelera == False).select().as_list()
+    actividades = db(db.TIPO_ACTIVIDAD.papelera == False).select().as_list()
+    usuarios = db(db.USUARIO.tipo!='Bloqueado').select().as_list()
     return locals()
 
 def obtener_actividades():
-
     if request.vars.Programa=="all":
-        tiposA = db(db.TIPO_ACTIVIDAD).select()
+        tiposA = db(db.TIPO_ACTIVIDAD.papelera == False).select()
     else:
         tiposA = db(db.TIPO_ACTIVIDAD.id_programa==int(request.vars.Programa)).select()
 
+        
     concat = '<option value="all" selected="">--cualquiera--</option>'
 
     for tipo in tiposA:
-        option = tipo.nombre
-        concat += '<option value="'+str(tipo.id_tipo)+'">'+option+'</option>'
+        if (tipo.papelera==False):
+                option = tipo.nombre
+                if len(option)>88:
+                    option = option[0:88]+"..."
+                    print option
+                concat += '<option value="'+str(tipo.id_tipo)+'">'+option+'</option>'
 
     return "jQuery('#lista_tipos').empty().append('"+concat+"')"
 

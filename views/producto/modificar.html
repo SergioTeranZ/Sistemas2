@@ -152,9 +152,75 @@
 
 			
 			$('.form-horizontal').submit(function(){
+				var infor_cargada = false;
+				
+				if($('#no_table_nombre').val()=="" ){
+					alert("El nombre del producto no puede estar vacio ");
+					return false;
+				}
+
+				if($('#no_table_descripcion').val()=="" ){
+					alert("La descripcion del producto no puede estar vacio ");
+					return false;
+				}
+
+				if($('#no_table_fecha_realizacion').val()=="" ){
+					alert("La fecha del producto no puede estar vacio ");
+					return false;
+				}
+
+				if($('#no_table_lugar').val()=="" ){
+					alert("El lugar de la actividad no puede estar vacio ");
+					return false;
+				}
+
+				if($('.obligatoria').val()==""){
+					alert("Todos los campos obligatorios  ");
+					return false; 
+				}
+
+				if($('.Cedula').val()!=""){
+					if($('.Cedula').val()!=null){
+						var Var = $('.Cedula').val();
+						if (/\d{2}.\d{3}.\d{3}$/.test(Var)== false){
+							alert("No es el formato del numero de cedula adecuado  ");
+							return false;
+						}
+					}
+				}
+
+				if($('.Telefono').val()!=""){
+					if($('.Cedula').val()!=null){
+						var Var = $('.Telefono').val();
+						if (/\(0\d{3}\)\d{3}-\d{4}$/.test(Var)== false){
+							alert("No es el formato del numero de telefono adecuado ");
+							return false;
+						}
+					}	
+				}
+
+
+				if($('.Decimal ').val()!=""){
+					if($('.Decimal').val()!=null){
+						var Var = $('.Decimal').val();
+						if (/\d\.\d/.test(Var)== false){
+							alert("No es un numero Decimal  ");
+							return false;
+						}
+					}
+				}
+
+				if($('.Entero ').val()!=""){
+					if($('.Entero').val()!=null){
+						var Var = $('.Entero').val();
+						if (/\d\.\d/.test(Var)== false){
+							alert("No es un numero Entero  ");
+							return false;
+						}
+					}
+				}
 
 				// Verificamos los comprobantes
-				var infor_cargada = false;
 				for (i = 1; i <= cantidad_comprobantes; i++) {
 			    	if($('#no_table_c0mpr0bant3_'+i).val() !="" ){
 			    		if($('#no_table_d3scr1pc10n_comprobante_'+i).val()==""){
@@ -164,11 +230,12 @@
 			    		infor_cargada = true;
 					}
 				}
-
 				if (!infor_cargada && comprobantes_eliminados==comprobantes_bd){
 					alert("Tiene que adjuntar al menos un comprobante");
 					return false;
 				}
+
+
 			});
 
 		});

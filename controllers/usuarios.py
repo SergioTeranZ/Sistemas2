@@ -85,7 +85,6 @@ def agregar():
         redirect(URL(c ="default",f="index"))
 
     message = ""
-    datosCompAux = ["","","","","","","",""]    # En esta lista guardaremos todos los datos que seran extraidos del LDAP para crear el nuevo usuario
     forma=SQLFORM(                              # Se hace un formulario para introducir un USBID.
         db.USUARIO,
         button=['Agregar'],
@@ -107,50 +106,32 @@ def agregar():
             message = T("El usuario no esta registrado en el CAS")
         else:
             user = get_ldap_data(usbidAux)
+            print(user)
+            print("----\n")
             telefonoAux = request.vars.telefono
             correo_alterAux = request.vars.correo_alter
             tipoAux = request.vars.tipo
-            imprimir1 = os.popen("ldapsearch -x -h ldap.usb.ve -b \"dc=usb,dc=ve\" uid="+ usbidAux +" | grep '^givenName\|^personalId\|^sn\|^uid:\|^mail\|^studentId\|^career\|^gidNumber'")
-
-            # Recorremos cada linea del archivo para realizar las asignaciones correspondientes de acuerdo a la informacion proporcionada por el LDAP
-            for line in imprimir1.readlines():
-                line = line.split(':')        # Separamos los campos por los dos puntos.
-                if line[0] == "uid":          # Primera Posicion: Carnet con guion.
-                    datosCompAux[0] = line[1]
-                elif line[0] == "givenName":  # Segunda Posicion: Nombre(s) del usuario.
-                    datosCompAux[1] = line[1]
-                elif line[0] == "sn":         # Tercera Posicion: Apellido(s) del usuario.
-                    datosCompAux[2] = line[1]
-                elif line[0] == "personalId": # Cuarta Posicion: Cedula de identidad del usuario.
-                    datosCompAux[3] = line[1]
-                elif line[0] == "gidNumber":  # Quinta Posicion: Rol del usuario (Profesor, estudiante, etc.).
-                    datosCompAux[4] = line[1]
-                elif line[0] == "mail":       # Sexta Posicion: Email del usuario.
-                    datosCompAux[5] = line[1]
-                elif line[0] == "career":     # Septima posicion: Carrera del usuario.
-                    datosCompAux[6] = line[1]
-                elif line[0] == "studentId":  # Octava posicion: Carnet sin guion.
-                    datosCompAux[7] = line[1]
-
+            
+           
             # Primero verificamos que el usuario que intenta agregarse no esta en la base de datos
             if db(db.USUARIO.usbid == usbidAux).isempty():
                 # Luego de insertar al usuario, mostramos un formulario al administrador con los datos de la persona agregada
                 form = SQLFORM.factory(
-                    Field("USBID", default=datosCompAux[0],writable = False),
-                    Field('Nombres',default=datosCompAux[1],writable = False),
-                    Field('apellidos', default=datosCompAux[2],writable=False),
+                    Field("USBID", default=usbidAux,writable = False),
+                    Field('Nombres',default=user["first_name"],writable = False),
+                    Field('Apellidos', default=user["last_name"],writable=False),
                     readonly=True)
                 if len(tipoAux) >= 3:
                 # Lo insertamos en la base de datos.
                     db.USUARIO.insert(ci=user["cedula"],
                             usbid=usbidAux,
-                            nombres=datosCompAux[1],
-                            apellidos=datosCompAux[2],
+                            nombres=user["first_name"],
+                            apellidos=user["last_name"],
                             correo_inst=user["email"],
                             telefono = telefonoAux,
                             correo_alter = correo_alterAux,
                             tipo = tipoAux)
-                    return dict(form = form, message = message, bool = 1, admin=get_tipo_usuario())
+                    return dict(form = form, message = message, bool = 1, admin=get_tipo_usuario(session))
                 else:
                     message = T("Debe Especificar un Tipo")
 

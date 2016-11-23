@@ -15,7 +15,7 @@
                 <div>
                   <!-- <a href="{{=URL(c='usuarios',f ='agregar')}}"> -->
                   <button type="button" id="agregarProgBtn" class="btn btn-default green btn-border"  style="margin-bottom: 1em;" onclick="location.href='{{=URL('generar_backup')}}'"">
-                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Generar backup
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-target="#ModalCrearBackup></span> Generar backup
                   </button>
                   <!-- </a> -->
                 </div>
@@ -78,7 +78,7 @@
                     <td class="center-vertically">
                     <a href="{{=URL(c='backup',f='eliminar',args=[ backup ])}}">
                       <center>
-                      <span class="glyphicon glyphicon-remove eliminar" style="color:#F44336"></span>
+                      <span class="glyphicon glyphicon-remove eliminar" style="color:#F44336" data-target="#ModalEliminarBackup></span>
 
                       </center>
                     </a>
@@ -97,6 +97,49 @@
         </div> 
         </div> 
 
+								 <!-- Modal Editar-->
+<div id="ModalCrearBackup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <center><h4 class="modal-title">Backup Creado</h4><center>
+      </div>
+      <div class="modal-body" id="modalEditar" data-hayErroresEditar="{{=hayErroresEditar}}">
+          <p> <center> El backup ha sido creado exitosamente </center> </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Eliminar-->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="ModalEliminarBackup" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <center> <h4 class="modal-title">Eliminar Backup</h4> </center>
+        </div>
+        <div class="modal-body">
+            <center> <p>¿Está seguro que quiere eliminar este backup?</p> </center>
+            <br>
+            <center>
+                <a id="BotonEliminar">
+                  <button type="button" class="btn blue-add btn-border">
+                          Eliminar
+                  </button>
+                </a>
+                <button type="button" class="btn btn-default btn-border" data-dismiss="modal">Cerrar</button>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <!-- Modal -->
     <div id="myModalAgregar" class="modal fade" role="dialog">

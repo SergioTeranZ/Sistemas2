@@ -36,6 +36,19 @@
                 rel="stylesheet"
                 type="text/css" />
 
+        <link   href="{{=URL('static', 'css/jquery-ui.css')}}"
+                rel="stylesheet"
+                type="text/css" />
+
+        <link   href="{{=URL('static', 'css/jquery-ui.theme.css')}}"
+                rel="stylesheet"
+                type="text/css" />  
+
+         <link   href="{{=URL('static', 'css/jquery-ui.structure.css')}}"
+                rel="stylesheet"
+                type="text/css" />               
+                
+
         <link href="{{=URL('static','css/font-awesome.css')}}" rel="stylesheet">
 </head>
 
@@ -54,8 +67,10 @@
                       Banner SiraDex
                   **********************************************--> 
                       <!---->
-                      {{=IMG(_src=URL('static', 'images', args='banner.jpg')) }} 
-
+                  
+                  <a href="http://siradex.dex.usb.ve/">
+                          {{=IMG(_src=URL('static', 'images', args='banner.jpg')) }} 
+                  </a>
                   <!--*********************************************
                       Navegacion
                   **********************************************-->
@@ -111,6 +126,7 @@
         <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
         <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
         <script src="{{=URL('static','js/bootstrap-filestyle.min.js')}}"> </script>
+        <script src="{{=URL('static','js/jquery-ui.js')}}"> </script>
         
         {{block script}}{{end}}
 </body>
