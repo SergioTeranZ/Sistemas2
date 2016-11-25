@@ -25,9 +25,9 @@ def call(): return service()
 
 # URLS DE RETORNO PARA EL CAS ##
 # PARA EL SERVIDOR:
-# URL_RETORNO = "http%3A%2F%2Fsiradex.dex.usb.ve%2Fdefault%2Flogin_cas"
+URL_RETORNO = "http%3A%2F%2Fsiradex.dex.usb.ve%2Fdefault%2Flogin_cas"
 # PARA DESSARROLLO. Cambiar el puerto 8000 si es necesario.
-URL_RETORNO = "http%3A%2F%2Flocalhost%3A8000%2FSiraDex%2Fdefault%2Flogin_cas"
+# URL_RETORNO = "http%3A%2F%2Flocalhost%3A8000%2FSiraDex%2Fdefault%2Flogin_cas"
 
 # FUNCIONES USUARIO
 
