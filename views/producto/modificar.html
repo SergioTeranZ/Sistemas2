@@ -60,6 +60,7 @@
 		  });
 			var comprobantes_eliminados = 0;
 			var comprobantes_bd = {{=len(comprobantes)}};
+			var documento_bd = {{=len(documento)}};
 			var comprobante_mostrado = comprobantes_bd;
 			var error_comprobante = 0;
 			var error_descripcion = 0;
@@ -147,8 +148,10 @@
 				});
 
 
+
 			var perro='	<div class="row">\
 								<div class="col-sm-offset-3 col-sm-8 content"><br>\
+									{{if len(documento) != 0 :}}\
 										<table><tbody>\
 											<tr>\
 												<td>\
@@ -165,15 +168,19 @@
 	                                    			</center>\
 	                                    		</td>\
 						    				</tr>\
-										{{pass}}\
 										</tbody></table>\
 									{{pass}}\
 								<br></div>\
 							</div>\
 						</div>';
 
-			$('#no_table_que_webonada_es_ps').before(perro);
-			$('#no_table_que_webonada_es_ps').addClass("hidden");
+			{{if len(documento) != 0 :}}
+				$('#no_table_{{=documento[1]}}__row').find('.group-span-filestyle').before(perro);
+				$('#no_table_{{=documento[1]}}__row').find('.group-span-filestyle').addClass('hidden');
+				$('#no_table_{{=documento[1]}}__row').find('.form-control').addClass('hidden');
+			{{pass}}
+
+
 
 			var html='<div id="comprobantes__row" class="form-group">\
 							<hr class="col-sm-offset-3 col-sm-8">\
@@ -208,11 +215,12 @@
 										</tbody></table>\
 									{{pass}}\
 								<br></div>\
-								<div class="col-sm-offset-3 col-sm-8">\
-									<a id="agregar_comprobante" href="#" onclick="return false;">\
-										<img alt="Agregar Comprobante" src="/SiraDex/static/icon/i_add.png" height="55" >\
-									</a>\
-								</div>\
+								<div class="col-md-offset-3">\
+									<div style="margin-bottom: 0em;">\
+										  	<button type="button" id="agregar_comprobante" class="btn btn-default green btn-border" onclick="return false;">\
+												    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Agregar Comprobante\
+											</button>\
+									</div>\
 							</div>\
 						</div>';
 

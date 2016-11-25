@@ -344,9 +344,8 @@ def modificar():
             elif tipo_campo in ['Texto Corto']:       fields.append(Field(nombre,'string',label=rows_campo.nombre+" (*)",requires=[IS_NOT_EMPTY(error_message='Inserte texto')]))
             elif tipo_campo in ['Cedula']:            fields.append(Field(nombre,'string',label=rows_campo.nombre+" (*)",requires=[IS_NOT_EMPTY(),IS_MATCH('\d{2}.\d{3}.\d{3}$', error_message='CI invalida, debe ser: XX.XXX.XXX')]))
             elif tipo_campo in ['Documento']:         
-                documento+= nombre 
-                documento+= str(rows_campo.id_campo)
-
+                temp= [str(rows_campo.id_campo), nombre]
+                documento+= temp
                 fields.append(Field(nombre,'upload',label=rows_campo.nombre+" (*)",uploadfolder=os.path.join(request.folder,'uploads'),requires=[IS_NOT_EMPTY(error_message='Debe subirse un archivo')]))
             elif tipo_campo in ['Telefono']:          fields.append(Field(nombre,'string',label=rows_campo.nombre+" (*)",requires=[IS_NOT_EMPTY(),IS_MATCH('\(0\d{3}\)\d{3}-\d{4}$', error_message='Telefeno invalido, debe ser: (0xxx)xxx-xxxx')]))
             elif tipo_campo in ['Cantidad Entera']:   fields.append(Field(nombre,'string',label=rows_campo.nombre+" (*)",requires=[IS_NOT_EMPTY(),IS_INT_IN_RANGE(-9223372036854775800, 9223372036854775807)]))
@@ -358,14 +357,17 @@ def modificar():
             if tipo_campo in   ['Fecha']:             fields.append(Field(nombre,'date',requires=IS_EMPTY_OR(IS_DATE(format=T('%Y-%m-%d'),error_message='Fecha invalida, debe ser: AAA-MM-DD'))))
             elif tipo_campo in ['Texto Corto']:       fields.append(Field(nombre,'string'))
             elif tipo_campo in ['Cedula']:            fields.append(Field(nombre,'string',requires=IS_EMPTY_OR(IS_MATCH('\d{2}.\d{3}.\d{3}$', error_message='CI invalida, debe ser: XX.XXX.XXX'))))
-            elif tipo_campo in ['Documento']:         fields.append(Field(nombre,'upload',requires=IS_EMPTY_OR(IS_UPLOAD_FILENAME()),uploadfolder=os.path.join(request.folder,'uploads')))
+            elif tipo_campo in ['Documento']:         
+                temp= [str(rows_campo.id_campo), nombre]
+                documento+= temp
+                fields.append(Field(nombre,'upload',requires=IS_EMPTY_OR(IS_UPLOAD_FILENAME()),uploadfolder=os.path.join(request.folder,'uploads')))
             elif tipo_campo in ['Telefono']:          fields.append(Field(nombre,'string',requires=IS_EMPTY_OR(IS_MATCH('\(0\d{3}\)\d{3}-\d{4}$', error_message='Telefeno invalido, debe ser: (0xxx)xxx-xxxx'))))
             elif tipo_campo in ['Cantidad Entera']:   fields.append(Field(nombre,'string',requires=IS_EMPTY_OR(IS_INT_IN_RANGE(-9223372036854775800, 9223372036854775807))))
             elif tipo_campo in ['Cantidad Decimal']:  fields.append(Field(nombre,'string',requires=IS_EMPTY_OR(IS_DECIMAL_IN_RANGE(-9223372036854775800, 9223372036854775807, dot=".",error_message='El numero debe ser de la forma X.X, donde X esta entre -9223372036854775800 y 9223372036854775807'))))
             elif tipo_campo in ['Texto Largo']:       fields.append(Field(nombre,'texto',requires=IS_NOT_EMPTY()))
 
         valores[nombre]=row.valor_campo
-
+    print(documento)
     for i in range(5):
         fields.append(Field("c0mpr0bant3_"+str(i+1), 'upload', autodelete=True, uploadseparate=True, uploadfolder=os.path.join(request.folder,'uploads'), label=''))
         fields.append(Field("d3scr1pc10n_comprobante_"+str(i+1), 'string', label="Descripción"))
@@ -398,12 +400,8 @@ def modificar():
             sql = "UPDATE PRODUCTO SET estado = 'Por Validar' WHERE id_producto = '"+str(id_producto)+"';"
 
         sql2 = "UPDATE PRODUCTO SET fecha_modificacion='"+str(now.date())+"' WHERE id_producto = '"+str(id_producto)+"';"
-        print "\n\nel sql quedo:" +sql
-        print "\nel otro: "+sql2
         db.executesql(sql)
-        print "listo1"
         db.executesql(sql2)
-        print "listo 2"
 
         # Eliminamos los autores anteriores.
         db(db.PARTICIPA_PRODUCTO.id_producto == id_producto).delete()
@@ -613,7 +611,7 @@ def descargar_documento():
 
     if not request.args:
         raise HTTP(404)
-    query = "SELECT nombre FROM CAMPO WHERE id_campo="+request.args(0)+";"
+    query = "SELECT valor_campo FROM PRODUCTO_TIENE_CAMPO WHERE id_campo="+request.args(0)+";"
     documento = db.executesql(query)
 
     pdf = os.path.join(request.folder,'uploads',documento[0][0])
@@ -728,8 +726,8 @@ def eliminar_comprobante():
         print "Exception: "
         print e
 
-
     db(db.COMPROBANTE.id_comprobante == id_comprobante).delete()
+    return redirect(URL(modificar,args=[id_comprobante]))
 
 def eliminar_documento():
 
@@ -739,7 +737,7 @@ def eliminar_documento():
 
     admin = get_tipo_usuario(session)
 
-    query = "SELECT nombre FROM CAMPO WHERE nombre="+id_documento+";"
+    query = "SELECT valor_campo FROM PRODUCTO_TIENE_CAMPO WHERE id_campo="+id_documento+";"
     documento = db.executesql(query)
 
     pdf = os.path.join(request.folder,'uploads', documento[0][0])
@@ -749,14 +747,15 @@ def eliminar_documento():
         print "Exception: "
         print e
 
-    db(db.COMPROBANTE.id_comprobante == id_documento).delete()
+    db(db.PRODUCTO_TIENE_CAMPO.id_campo == id_documento).delete()
+    return redirect(URL(modificar,args=[request.args(1)]))
 
 def get_documento():
     admin = get_tipo_usuario(session)
 
     if not request.args:
         raise HTTP(404)
-    query = "SELECT nombre FROM CAMPO WHERE nombre="+request.args(0)+";"
+    query = "SELECT valor_campo FROM PRODUCTO_TIENE_CAMPO WHERE id_campo    ="+request.args(0)+";"
     documento = db.executesql(query)
 
     pdf = os.path.join(request.folder,'uploads',documento[0][0])
