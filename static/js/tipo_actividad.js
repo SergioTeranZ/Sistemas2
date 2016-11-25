@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  var maxLongNombre  = 128;    // Longitud máxima que tendrá el campo nombre.
+  var maxLongNombre  = 50;    // Longitud máxima que tendrá el campo nombre.
   var maxLongDescrip = 2048;   // Longitud máxima que tendrá el campo descripción.
   var maxLongCodigo = 10;      // Longitud máxima que tendrá el campo código.
   var hayPrograma = $(".formularioTipo").attr("data-hayPrograma");
@@ -115,7 +115,7 @@ $(document).ready(function(){
       i = 1;
 
       while (true){
-        if (splitTitulo.length > i && amountText + splitTitulo[i].length + 1 < 18){
+        if (splitTitulo.length >= i && amountText + splitTitulo[i].length + 1 < 18){
             restTitulo += " " + splitTitulo[i];
             amountText += splitTitulo[i].length;
             i++;
@@ -151,7 +151,7 @@ $(document).ready(function(){
       amountText += splitDescription[0].length;
 
       while (true){
-        if (splitDescription.length > i && amountText + splitDescription[i].length + 1 < 30){
+        if (splitDescription.length >= i && amountText + splitDescription[i].length + 1 < 30){
             restContent += " " + splitDescription[i];
             amountText += splitDescription[i].length;
             i++;
@@ -165,13 +165,13 @@ $(document).ready(function(){
       amountText = 0;
 
       // Para lo que se oculta.
-      if (splitDescription.length > i){
+      if (splitDescription.length >= i){
         result += splitDescription[i];
         amountText += splitDescription[i].length;
         i += 1;
 
         while (true){
-          if (splitDescription.length > i && amountText + splitDescription[i].length + 1 < 30){
+          if (splitDescription.length >= i && amountText + splitDescription[i].length + 1 < 30){
               result += " " + splitDescription[i];
               amountText += splitDescription[i].length;
               i++;

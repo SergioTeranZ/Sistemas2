@@ -97,7 +97,7 @@ $(document).ready(function(){
       i = 1;
 
       while (true){
-        if (splitTitulo.length > i && amountText + splitTitulo[i].length + 1 < 18){
+        if (splitTitulo.length >= i && amountText + splitTitulo[i].length + 1 < 18){
             restTitulo += " " + splitTitulo[i];  
             amountText += splitTitulo[i].length;
             i++;
@@ -133,7 +133,7 @@ $(document).ready(function(){
       amountText += splitDescription[0].length;
  
       while (true){
-        if (splitDescription.length > i && amountText + splitDescription[i].length + 1 < 46){
+        if (splitDescription.length >= i && amountText + splitDescription[i].length + 1 < 46){
             restContent += " " + splitDescription[i]; 
             amountText += splitDescription[i].length;
             i++; 
@@ -147,13 +147,13 @@ $(document).ready(function(){
       amountText = 0;
 
       // Para lo que se oculta.
-      if (splitDescription.length > i){
+      if (splitDescription.length >= i){
         result += splitDescription[i];
         amountText += splitDescription[i].length;
         i += 1;
 
         while (true){
-          if (splitDescription.length > i && amountText + splitDescription[i].length + 1 < 46){
+          if (splitDescription.length >= i && amountText + splitDescription[i].length + 1 < 46){
               result += " " + splitDescription[i];  
               amountText += splitDescription[i].length;
               i++;
