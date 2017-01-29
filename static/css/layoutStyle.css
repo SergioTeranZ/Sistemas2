@@ -311,6 +311,18 @@ a#disabled-dropdown:hover {
     border: 1px solid #03A9F4  !important;
 }
 
+.green-validar {
+	color: #7CB342 !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid #7CB342 !important;
+}
+
+.green-validar:hover {
+	color: #FFFFFF !important;
+    background-color: #7CB342 !important;
+    border: 1px solid #7CB342 !important;
+}
+
 .green {
     color: #286090 !important;
     background-color: #FFFFFF !important;

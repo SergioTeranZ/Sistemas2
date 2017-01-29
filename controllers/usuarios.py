@@ -10,14 +10,14 @@ def download(): return response.download(request,db)
 def call(): return service()
 ### end requires
 from funciones_siradex import get_tipo_usuario
-    
+
 def gestionar():
 
     admin = get_tipo_usuario(session)
-    
+
     if (admin==0 or admin==2):
         redirect(URL(c ="default",f="index"))
-       
+
     message = session.message
     session.message = ""
     aux = db(db.USUARIO).select(db.USUARIO.usbid,db.USUARIO.nombres,db.USUARIO.apellidos,db.USUARIO.tipo)
@@ -64,23 +64,12 @@ def gestionar():
     elif formulario_contactar.errors:
           hayErrores = formulario_contactar.errors
 
-    #
-    # if len(request.vars)!=0:
-    #     if (not db(db.USUARIO.usbid == request.args[0]).isempty()):
-    #         if(request.args[0] != session.usuario["usbid"]):
-    #             db(db.USUARIO.usbid == request.args[0]).update(tipo = request.vars.tipo)
-    #             redirect(URL('gestionar'))
-    #         else:
-    #             message = T("Para cambiar sus permisos, por favor comuníquese con un administrador")
-    #     else:
-    #         message = T("El Usuario no se encuentra registrado")
-
     return dict(form_editar=form_editar, hayErrores=hayErrores, formulario_contactar=formulario_contactar,usuarios = aux,message = message, admin=get_tipo_usuario(session))
 
 def agregar():
 
     admin = get_tipo_usuario(session)
-    
+
     if (admin==0 or admin==2):
         redirect(URL(c ="default",f="index"))
 
@@ -111,8 +100,8 @@ def agregar():
             telefonoAux = request.vars.telefono
             correo_alterAux = request.vars.correo_alter
             tipoAux = request.vars.tipo
-            
-           
+
+
             # Primero verificamos que el usuario que intenta agregarse no esta en la base de datos
             if db(db.USUARIO.usbid == usbidAux).isempty():
                 # Luego de insertar al usuario, mostramos un formulario al administrador con los datos de la persona agregada
@@ -143,10 +132,10 @@ def agregar():
 def eliminar():
 
     admin = get_tipo_usuario(session)
-    
+
     if (admin==0 or admin==2):
         redirect(URL(c ="default",f="index"))
-   
+
     if len(request.args)!=0 :
         if request.args[0] != session.usuario["usbid"]:
             session.message = ""
@@ -161,10 +150,10 @@ def eliminar():
 def modificar():
 
     admin = get_tipo_usuario(session)
-    
+
     if (admin==0 or admin==2):
         redirect(URL(c ="default",f="index"))
-   
+
     message= ""
     form = SQLFORM.factory(
                     Field("USBID", default=request.args[0],writable = False),

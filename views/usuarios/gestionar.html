@@ -9,7 +9,7 @@
         {{=message}}
     </div>
 
-    <div class="row"> 
+    <div class="row">
         <div class="col-md-3 col-md-offset-9">
         <!-- Datos del usuario -->
                 <div style="margin-bottom: 1em;">
@@ -22,7 +22,7 @@
             <!-- <p class="text-justify">
             </p> -->
         </div>
-    </div>    
+    </div>
 {{end}}
 
 {{block contenido}}
@@ -457,6 +457,7 @@
 
       if (hayErrores != '{}') {
         $('#modalContactarUsuario').modal('show');
+        $("#no_table_usbid__row").hide();
       }
 
       // Pasamos los argumentos para contactar el usuario

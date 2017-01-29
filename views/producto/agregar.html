@@ -11,9 +11,9 @@
 <div class="col-lg-12">
 	<p>{{="Descripcion: "+descripcion_actividad}}</p>
 	<h4> Formulario </h4>
-    <p class="text-justify">
-		Los campos con asteriscos <span style="color:red">*</span> son obligatorios
-    </p>
+  <p class="text-justify">
+	Los campos con asteriscos <span style="color:red">*</span> son obligatorios.
+  </p>
 </div>
 {{end}}
 
@@ -26,6 +26,10 @@
             	{{=form}}
 
 			</div>
+			<center><p>
+				 Una vez enviado su producto no podrá editarlo, este esperara a ser evaluado por el Comité de Evaluación
+				 de Decanato de Extensión. Si desea editarlo más tarde puede guardarlo como Borrador.
+			</p></center>
 		</div>
 	</div>
 </div>
@@ -34,6 +38,20 @@
 
 
 {{block script}}
+<style>
+	.author-select {
+		width: 80%
+	}
+	.remove-tag    {
+		position: absolute;
+    float: none;
+    margin-left: -12%;
+	  margin-top: 4px;
+	}
+	.blue-add{
+		margin-left: 15%;
+	}
+</style>
 
 <script>
 
@@ -75,6 +93,8 @@ $(document).ready(function () {
 	var error_comprobante = 0;
 	var error_descripcion = 0;
 	var cantidad_comprobantes = 5;
+	var autores_agregados = 0
+	var cantidad_autores  = 5;
 
 	// Muestra la cantidad de caracteres disponible en el textfield de nombre.
 
@@ -84,13 +104,13 @@ $(document).ready(function () {
 
 	$(".Cedula").click(function(){
 
-		$(".Cedula").siblings(".help-block").html( "el formato de la cedula es XX.XXX.XXX");	
+		$(".Cedula").siblings(".help-block").html( "el formato de la cedula es XX.XXX.XXX");
 
 	});
 
 	$(".Telefono").click(function(){
 
-		$(".Telefono").siblings(".help-block").html( "el formato de telefono es (0xxx)XXX-XXXX");	
+		$(".Telefono").siblings(".help-block").html( "el formato de telefono es (0xxx)xxx-xxxx");
 
 	});
 
@@ -100,8 +120,82 @@ $(document).ready(function () {
 
 	textoRestante1(maxLongNombre, $("#no_table_lugar"));
 
+	// agregar autores adicionales
+	$('#no_table_autor_1__row').before('<div id="autores_row" class="form-group">\
+													<h3 class="col-sm-offset-3">Otros Autores</h3>\
+													\
+													<div class="row">\
+														<div class="col-sm-10 col-sm-offset-2" style="margin-left:15em;">\
+											    	\
+											    	<span class="col-sm-8" style="text-align: justify;">\
+															Puedes agregar a otros usuarios registrados en el SIRADEX como Autores.\
+															<br>\
+															Todos los autores pueden ver este producto.\
+															<br>\
+															Un producto tiene un maximo de <b>5</b> autores adicionales.\
+														</span>\
+														\
+														<div class="col-md-offset-3">\
+															<div style="margin-bottom: 0em;">\
+															  <button type="button" id="agregar_autor" class="btn btn-default green btn-border" onclick="return false;">\
+															    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Agregar Autor\
+															  </button>\
+															</div>\
+										        </div>\
+										        \
+														</div>\
+													</div>\
+													</div>\
+													<br>'
+										);
 
-	$('#no_table_c0mpr0bant3_1__row').before('	<div id="comprobantes__row" class="form-group">\
+		for (i = 1; i <= cantidad_autores; i++) {
+	    	$('#no_table_autor_'+i+'__row').addClass("hidden");
+				$('#no_table_autor_'+i).addClass("author-select");
+				$('#no_table_autor_'+i+'__row').append(' <a class="remove-tag" data-autor="'+i+'" onClick = "">\
+			                                              <span class="glyphicon glyphicon-remove red"></span>\
+			                                    				</a>\
+			                                    			');
+		}
+
+		$('#agregar_autor').click(function(){
+			if (autores_agregados < cantidad_autores){
+						autores_agregados += 1;
+						for (var i = 1; i <= 5; i++) {
+						if ($('#no_table_autor_'+i+'__row').hasClass("hidden")){
+							$('#no_table_autor_'+i+'__row').removeClass("hidden");
+							break;
+						};
+					};
+			};
+			if (autores_agregados==cantidad_autores){
+				$('#agregar_autor').addClass("hidden");
+			};
+		});
+
+		$('.remove-tag').click(function(e){
+			autores_agregados = autores_agregados - 1;
+			var autor = $(this).data('autor');
+			$('#no_table_autor_'+ autor).val('');
+			$('#no_table_autor_'+ autor +'__row').addClass("hidden");
+			if (autores_agregados < cantidad_autores){
+				$('#agregar_autor').removeClass("hidden");
+			};
+		});
+
+		// Verficamos que el usuario no seleccione dos veces al mismo autor
+		$('.author-select').on('change', function () {
+    	var val = $(this).val();
+			var id  = $(this).attr('id');
+    	$('.author-select').each(function() {
+        	if ($(this).val() === val && val != '' && $(this).attr('id') != id) {
+            alert('Ya el usuario seleccionado es autor de este producto.');
+						$('#'+ id).val('');
+       }
+    	});
+		});
+
+	 $('#no_table_c0mpr0bant3_1__row').before('	<div id="comprobantes__row" class="form-group">\
 													<h3 class="col-sm-offset-3">Comprobantes</h3>\
 													\
 													<div class="row">\
@@ -129,8 +223,9 @@ $(document).ready(function () {
     	$('#no_table_c0mpr0bant3_'+i+'__row').addClass("hidden");
     	$('#no_table_d3scr1pc10n_comprobante_'+i+'__row').addClass("hidden");
 	}
+
 	$('#agregar_comprobante').click(function(){
-		
+
 		if (comprobante_mostrado<cantidad_comprobantes){
 			if($('#no_table_c0mpr0bant3_'+comprobante_mostrado).val()=="" ){
 				if (!error_comprobante){
@@ -171,7 +266,13 @@ $(document).ready(function () {
 		    alert('solo se permite cargar archivos PDF');
 		    $(this).val('');
 		    $(this).filestyle('clear');
-
+		}
+		
+		if (this.files[0].size > 2097152){
+		var text = 'Solo se permiten archivos de hasta 2 MB, el archivo que se cargo es de '+		((this.files[0].size)/1024/1024).toFixed(1)+' MB';
+	        alert(text);
+		    $(this).val('');
+		    $(this).filestyle('clear');
 		}
 	});
 
@@ -201,7 +302,7 @@ $(document).ready(function () {
 
 		if($('.obligatoria').val()==""){
 			alert("Todos los campos obligatorios  ");
-			return false; 
+			return false;
 		}
 
 		if($('.Cedula').val()!=""){
@@ -221,7 +322,7 @@ $(document).ready(function () {
 					alert("No es el formato del numero de telefono adecuado ");
 					return false;
 				}
-			}	
+			}
 		}
 
 

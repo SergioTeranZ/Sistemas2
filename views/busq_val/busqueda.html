@@ -16,7 +16,9 @@
   }
 </style>
 
+<!-- Titulo graficas -->
 <h2>Graficas
+<!-- iconos mostrar/ocultar -->
   <span class="glyphicon glyphicon-eye-close" id="ocultar_graficas" title="Ocultar graficas"></span>
   <span class="glyphicon glyphicon-eye-open" id="ver_graficas" title="Ver graficas" style="display: none;"></span></h2>
 <div class="row graficas">
@@ -40,7 +42,7 @@
 
   <div class="col-md-4">  
     <div class="tab-content card"  style="text-align: center;">
-      <embed type="image/svg+xml" src="{{=graficaLine }}" />
+      <embed type="image/svg+xml" src="{{=tabla }}" />
       <button type="button" id="btn-barLine" class="btn btn-default green btn-border" data-toggle="modal" data-target="#modalLine" style="margin-top: -5em;">
         <span class="glyphicon glyphicon-resize-full"></span> Aumentar
       </button>        
@@ -60,7 +62,7 @@
           <tr>
             <th>Nombre Producto</th>
             <th>Descripcion</th>
-            <th>Tipo Producto</th>
+            <th>Fecha</th>
             <th><center>Mostrar</center></th>
           </tr>
           </thead>
@@ -76,7 +78,7 @@
                 </td>
 
                  <td class="detalles">
-                    {{=producto[2]}}
+                    {{=producto[4]}}
                 </td>                                           
                     
                 <td>
@@ -100,6 +102,7 @@
 
 
 <!-- Modal 1 -->
+{{try:}}
 <div id="modalPie" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -124,7 +127,8 @@
 
   </div>
 </div>
-
+{{except:}}
+{{pass}}
 <!-- Modal 2 -->
 <div id="modalBar" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -161,7 +165,7 @@
         <h4 class="modal-title"><center>Grafica de Lineas</center></h4>
       </div>
       <div class="modal-body">
-        <embed type="image/svg+xml" src="{{=graficaLine }}" style="max-height: 100%" />
+        <embed type="image/svg+xml" src="{{=tabla }}" style="max-height: 100%" />
       </div>
       <div class="modal-footer">
       <center>

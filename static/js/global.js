@@ -14,6 +14,7 @@ function textoRestante(maxLong, idDivUsar){
   // Selecciono el div que es "hermano" del textfield de nombre.
   var longitudTextoAct = $(idDivUsar).val().length;
   $(idDivUsar).siblings(".help-block").html((maxLong - longitudTextoAct) + " caracteres");
+  $(idDivUsar).siblings(".help-block").css("text-align","center");
 
   // Si estoy escribiendo en el textfield de nombre, entonces...
   $(idDivUsar).on('keypress keyup keydown', function(e){

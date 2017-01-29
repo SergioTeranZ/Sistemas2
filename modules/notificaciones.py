@@ -131,7 +131,7 @@ def enviar_correo_bienvenida(mail, usuario):
 # con el campo mensaje dependiendo del tipo sdel correo que se quiere.
 def get_plantilla_html(mensaje):
 
-		usb_logo_url = 'https://siradex.dex.usb.ve/static/images/usblogo.png'
+		usb_logo_url = 'https://docs.google.com/uc?id=0B1K1YSWF6rgKRnJyT0ZxZkJ6M3M'
 
 		plantilla = '''
 				<html>
@@ -195,7 +195,6 @@ def get_plantilla_html(mensaje):
 
 					<body>
 						%(mensaje)s
-
 						<div class='bottom-msg'>
 								<center>
 										<p> Este mensaje fue enviado de manera automatica por el Sistema SIRADEX</p>

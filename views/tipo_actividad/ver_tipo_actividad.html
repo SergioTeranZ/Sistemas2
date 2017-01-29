@@ -12,10 +12,10 @@
 <div class="container-fluid">
     <table class="table table-bordered tabla-border" >
         <tbody class="tabla-border">
-            <tr> <th class="col-md-2 tabla-border">Nombre:</th>           <td class="col-md-6 tabla-border"> {{=tipo.nombre}} </td> </tr>
-            <tr> <th class="col-md-2 tabla-border">Descripción:</th>      <td class="col-md-6 tabla-border"> {{=tipo.descripcion}} </td> </tr>
-            <tr> <th class="col-md-2 tabla-border">Tipo de Programa:</th> <td class="col-md-6 tabla-border"> {{='(P) Evaluables por pares académicos' if tipo.tipo_p_r == "P" else '(R) No evaluables por pares académicos'}} </td></tr>
+            <tr> <th class="col-md-2 tabla-border">Codigo de la Actividad:</th> <td class="col-md-6 tabla-border"> {{=tipo.codigo}} </td> </tr>
             <tr> <th class="col-md-2 tabla-border">Programa:</th>         <td class="col-md-6 tabla-border"> {{=programa_nombre}} </td> </tr>
+            <tr> <th class="col-md-2 tabla-border">Tipo de Actividad:</th> <td class="col-md-6 tabla-border"> {{='(P) Evaluables por pares académicos' if tipo.tipo_p_r == "P" else '(R) No evaluables por pares académicos'}} </td></tr>
+            <tr> <th class="col-md-2 tabla-border">Descripción:</th>      <td class="col-md-6 tabla-border"> {{=tipo.descripcion}} </td> </tr>
             <!--<tr> <th class="col-md-2">Producto</td>         <td class="col-md-6"> < Producto > </td> </tr>-->
         </tbody>
     </table>
@@ -26,12 +26,14 @@
 <div class="row">
 
     <div class="col-sm-5 col-sm-push-9" style="margin-top:10px;margin-left:50px">
-      <button type="button" class="btn btn-default green btn-border"
-              data-target="#modalAgregarCampo"
-              data-toggle="modal">
-        <span class="glyphicon glyphicon-plus-sign"></span>  Agregar Campo
-      </button>
-      <br></br>
+      {{ if admin in [1,2]: }}
+        <button type="button" class="btn btn-default green btn-border"
+                data-target="#modalAgregarCampo"
+                data-toggle="modal">
+          <span class="glyphicon glyphicon-plus-sign"></span>  Agregar Campo
+        </button>
+        <br></br>
+      {{pass}}
     </div>
 
     <div class="container-fluid card">
@@ -42,8 +44,10 @@
                       <th> <center> Nombre </center> </th>
                       <th> <center> Tipo </center> </th>
                       <th> <center> Obligatorio </center> </th>
-                      <th> <center> Editar </center> </th>
-                      <th> <center> Eliminar </center> </th>
+                      {{ if admin in [1,2]: }}
+                        <th> <center> Editar </center> </th>
+                        <th> <center> Eliminar </center> </th>
+                      {{pass}}
                   </tr>
               </thead>
               <tbody>
@@ -57,29 +61,31 @@
                               <td> <center> {{=campo.nombre}} </center></td>
                               <td> <center> {{=campo.tipo_campo}} </center></td>
                               <td> <center> {{= 'Si' if campo.obligatorio else 'No'}} </center></td>
-                              <td>
+                              {{ if admin in [1,2]: }}
+                                <td>
+                                    <center>
+                                      <a href="#">
+                                          <span class="glyphicon glyphicon-edit blue"
+                                                data-toggle="modal" data-target="#modalEditarCampo"
+                                                data-id-campo="{{=campo.id_campo}}"
+                                                data-nombre="{{=campo.nombre}}"
+                                                data-tipo-campo="{{=campo.tipo_campo}}"
+                                                data-obligatorio="{{=campo.obligatorio}}">
+                                          </span>
+                                      </a>
+                                    </center>
+                                </td>
+                                <td>
                                   <center>
                                     <a href="#">
-                                        <span class="glyphicon glyphicon-edit blue"
-                                              data-toggle="modal" data-target="#modalEditarCampo"
-                                              data-id-campo="{{=campo.id_campo}}"
-                                              data-nombre="{{=campo.nombre}}"
-                                              data-tipo-campo="{{=campo.tipo_campo}}"
-                                              data-obligatorio="{{=campo.obligatorio}}">
-                                        </span>
+                                      <span class="glyphicon glyphicon-remove red"
+                                            data-link-eliminar-campo="{{=URL(f='eliminar_campo', args=[tipo.id_tipo, campo.id_campo])}}"
+                                            data-toggle="modal" data-target="#modalEliminarCampo">
+                                      </span>
                                     </a>
                                   </center>
-                              </td>
-                              <td>
-                                <center>
-                                  <a href="#">
-                                    <span class="glyphicon glyphicon-remove red"
-                                          data-link-eliminar-campo="{{=URL(f='eliminar_campo', args=[tipo.id_tipo, campo.id_campo])}}"
-                                          data-toggle="modal" data-target="#modalEliminarCampo">
-                                    </span>
-                                  </a>
-                                </center>
-                              </td>
+                                </td>
+                              {{pass}}
                           </tr>
                       {{pass}}
                   {{pass}}
@@ -121,8 +127,8 @@
           </div>
           <br>
           <div class="row">
-            <div class="col-md-4 right"></div>
-            <div class="col-md-7 ">
+            <div class="col-md-3 right"></div>
+            <div class="col-md-9">
               <div style="display: none;">{{=formulario_editar_campo.custom.widget.id_campo}}</div>
               {{=formulario_editar_campo.custom.submit}}
               {{=formulario_editar_campo.custom.end}}

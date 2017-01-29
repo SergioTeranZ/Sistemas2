@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from funciones_siradex import get_tipo_usuario
 
-#import imp  
-#foo = imp.load_source('module.funciones_siradex', 'funciones_siradex.py') 
+#import imp
+#foo = imp.load_source('module.funciones_siradex', 'funciones_siradex.py')
 '''
 Vista de Gestionar Programas tiene las opciones:
 - Agregar Programa
@@ -11,7 +11,7 @@ Vista de Gestionar Programas tiene las opciones:
 '''
 
 def agregar_programa():
-  
+
     admin = get_tipo_usuario(session)
     if (admin==0):
         redirect(URL(c ="default",f="index"))
@@ -54,9 +54,6 @@ def gestionar_programas():
 
     admin = get_tipo_usuario(session)
 
-    if (admin==0):
-        redirect(URL(c ="default",f="index"))
-
     # Obtengo todos los programas almacenados en la base de datos.
     programas = db(db.PROGRAMA.papelera == False).select()
 
@@ -91,7 +88,7 @@ def gestionar_programas():
                                             error_message= ('Ya existe un programa con el nombre "' + request.vars['Nombre'] + '".') if not(request.vars['Nombre'] is None) else 'Ya existe un programa con el nombre ')]),
         Field('Abreviacion',
                 requires = [IS_NOT_EMPTY(error_message='La abreviacion del programa no puede quedar vacia.'),
-                            IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales.")]),        
+                            IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales.")]),
         Field('Descripcion', type="text",
               requires=IS_NOT_EMPTY(error_message='La descripcion del programa no puede quedar vacia.')),
         Field('id_programa', type="string"),

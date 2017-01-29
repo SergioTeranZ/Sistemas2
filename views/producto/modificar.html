@@ -26,13 +26,31 @@
 
 					{{=form}}
 			</div>
+			<center><p>
+				 Una vez enviado su producto no podrá editarlo, este esperara a ser evaluado por el Comité de Evaluación
+				 de Decanato de Extensión. Si desea editarlo más tarde puede guardarlo como Borrador.
+			</p></center>
 		</div>
 	</div>
 </div>
 {{end}}
 
 {{block script}}
-	<script type="text/javascript">
+<style>
+	.author-select {
+		width: 80%
+	}
+	.remove-tag    {
+		position: absolute;
+    float: none;
+    margin-left: -12%;
+	  margin-top: 4px;
+	}
+	.blue-add{
+		margin-left: 15%;
+	}
+</style>
+<script type="text/javascript">
 		$(document).ready(function () {
 			$(":file").filestyle({
 		    buttonBefore: true,
@@ -42,11 +60,126 @@
 		  });
 			var comprobantes_eliminados = 0;
 			var comprobantes_bd = {{=len(comprobantes)}};
+			var documento_bd = {{=len(documento)}};
 			var comprobante_mostrado = comprobantes_bd;
 			var error_comprobante = 0;
 			var error_descripcion = 0;
 			var cantidad_comprobantes = 5;
 			var agregados_aqui = 0;
+			var autores_agregados = {{= num_aut }};
+			var cantidad_autores  = 5;
+
+			// agregar autores adicionales
+			$('#no_table_autor_1__row').before('<div id="autores_row" class="form-group">\
+															<h3 class="col-sm-offset-3">Otros Autores</h3>\
+															\
+															<div class="row">\
+																<div class="col-sm-10 col-sm-offset-2" style="margin-left:15em;">\
+													    	\
+													    	<span class="col-sm-8" style="text-align: justify;">\
+																	Puedes agregar a otros usuarios registrados en el SIRADEX como Autores.\
+																	<br>\
+																	Todos los autores pueden ver este producto.\
+																	<br>\
+																	Un producto tiene un maximo de <b>5</b> autores adicionales.\
+																</span>\
+																\
+																<div class="col-md-offset-3">\
+																	<div style="margin-bottom: 0em;">\
+																	  <button type="button" id="agregar_autor" class="btn btn-default green btn-border" onclick="return false;">\
+																	    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Agregar Autor\
+																	  </button>\
+																	</div>\
+												        </div>\
+												        \
+																</div>\
+															</div>\
+															</div>\
+															<br>'
+												);
+
+				for (i = 1; i <= cantidad_autores; i++) {
+						$('#no_table_autor_'+i).addClass("author-select");
+						$('#no_table_autor_'+i+'__row').append(' <a class="remove-tag" data-autor="'+i+'" onClick = "">\
+					                                              <span class="glyphicon glyphicon-remove red"></span>\
+					                                    				</a>\
+					                                    			');
+				}
+
+				for (i = autores_agregados + 1; i <= cantidad_autores; i++) {
+			    	$('#no_table_autor_'+ i +'__row').addClass("hidden");
+				}
+
+				$('#agregar_autor').click(function(){
+					if (autores_agregados < cantidad_autores){
+								autores_agregados += 1;
+								for (var i = 1; i <= 5; i++) {
+								if ($('#no_table_autor_'+i+'__row').hasClass("hidden")){
+									$('#no_table_autor_'+i+'__row').removeClass("hidden");
+									break;
+								};
+							};
+					};
+					if (autores_agregados==cantidad_autores){
+						$('#agregar_autor').addClass("hidden");
+					};
+				});
+
+				// Verficamos que el usuario no seleccione dos veces al mismo autor
+				$('.author-select').on('change', function () {
+					var val = $(this).val();
+					var id  = $(this).attr('id');
+					$('.author-select').each(function() {
+							if ($(this).val() === val && val != '' && $(this).attr('id') != id) {
+								alert('Ya el usuario seleccionado es autor de este producto.');
+								$('#'+ id).val('');
+					 }
+					});
+				});
+
+				$('.remove-tag').click(function(e){
+					autores_agregados = autores_agregados - 1;
+					var autor = $(this).data('autor');
+					$('#no_table_autor_'+ autor).val('');
+					$('#no_table_autor_'+ autor +'__row').addClass("hidden");
+					if (autores_agregados < cantidad_autores){
+						$('#agregar_autor').removeClass("hidden");
+					};
+				});
+
+
+
+			var perro='	<div class="row">\
+								<div class="col-sm-offset-3 col-sm-8 content"><br>\
+									{{if len(documento) != 0 :}}\
+										<table><tbody>\
+											<tr>\
+												<td>\
+													<a  href="/{{=request.application}}/{{=request.controller}}/get_documento/{{=documento[0]}}" target="blanck">\
+						        					{{=documento[1]}}\
+						    						</a>\
+						    					</td>\
+						    					<td class="center-vertically">\
+	                                    			<center>\
+	                                   					<a onClick = "if(confirm(\'¿Está seguro de que desea eliminar este comprobante?\')) {window.location.href=\'{{=URL(f="eliminar_documento", args=[documento[0], id_producto])}}\'\
+	                                   						;}">\
+	                                                        <span class="glyphicon glyphicon-remove red"></span>\
+	                                    				</a>\
+	                                    			</center>\
+	                                    		</td>\
+						    				</tr>\
+										</tbody></table>\
+									{{pass}}\
+								<br></div>\
+							</div>\
+						</div>';
+
+			{{if len(documento) != 0 :}}
+				$('#no_table_{{=documento[1]}}__row').find('.group-span-filestyle').before(perro);
+				$('#no_table_{{=documento[1]}}__row').find('.group-span-filestyle').addClass('hidden');
+				$('#no_table_{{=documento[1]}}__row').find('.form-control').addClass('hidden');
+			{{pass}}
+
 
 
 			var html='<div id="comprobantes__row" class="form-group">\
@@ -82,14 +215,14 @@
 										</tbody></table>\
 									{{pass}}\
 								<br></div>\
-								<div class="col-sm-offset-3 col-sm-8">\
-									<a id="agregar_comprobante" href="#" onclick="return false;">\
-										<img alt="Agregar Comprobante" src="/SiraDex/static/icon/i_add.png" height="55" >\
-									</a>\
-								</div>\
+								<div class="col-md-offset-3">\
+									<div style="margin-bottom: 0em;">\
+										  	<button type="button" id="agregar_comprobante" class="btn btn-default green btn-border" onclick="return false;">\
+												    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Agregar Comprobante\
+											</button>\
+									</div>\
 							</div>\
 						</div>';
-
 
 
 
@@ -150,10 +283,10 @@
 				}
 			});
 
-			
+
 			$('.form-horizontal').submit(function(){
 				var infor_cargada = false;
-				
+
 				if($('#no_table_nombre').val()=="" ){
 					alert("El nombre del producto no puede estar vacio ");
 					return false;
@@ -176,7 +309,7 @@
 
 				if($('.obligatoria').val()==""){
 					alert("Todos los campos obligatorios  ");
-					return false; 
+					return false;
 				}
 
 				if($('.Cedula').val()!=""){
@@ -196,7 +329,7 @@
 							alert("No es el formato del numero de telefono adecuado ");
 							return false;
 						}
-					}	
+					}
 				}
 
 
@@ -239,5 +372,6 @@
 			});
 
 		});
+
 	</script>
 {{end}}

@@ -6,6 +6,7 @@
 
 {{block contenido}}
 <!-- Nav tabs -->
+{{=mensaje}}
 <div class="card">
 <ul class="nav nav-tabs" role="tablist">
   <li class="nav-item">
@@ -80,6 +81,7 @@
                     <th> <center> Usuario Eliminó </center> </th>
                     <th> <center> Fecha de Eliminación </center> </th>
                     <th> <center> Restaurar </center> </th>
+                    <th> <center> Eliminar </center> </th>
                 </tr>
             </thead>
             <tbody>
@@ -100,6 +102,18 @@
                                           data-toggle="modal"
                                           data-target="#ModalRestaurarPrograma"
                                           data-link-restaurar="{{=URL(f='restaurar_programa', args=[programa.id_programa])}}"
+                                          >
+                                    </span>
+                                </a>
+                            <center>
+                        </td>
+                        <td class="center-vertically">
+                            <center>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-remove red"
+                                          data-toggle="modal"
+                                          data-target="#ModalEliminarPrograma"
+                                          data-link-eliminar="{{=URL(f='eliminar_programa_papelera', args=[programa.id_programa])}}"
                                           >
                                     </span>
                                 </a>
@@ -153,7 +167,7 @@
             <center> <h4 class="modal-title">Eliminar</h4> </center>
         </div>
         <div class="modal-body">
-            <center> <p>¿Está seguro que desea eliminar de manera permanente este tipo de Actividad? Se borraran todas las actividades asociadas al mismo</p> </center>
+            <center> <p>¿Está seguro que desea eliminar de manera permanente este tipo de Actividad?</p> </center>
             <br>
             <center>
                 <a id="botonEliminarTipoActividad">
@@ -204,7 +218,7 @@
             <center> <h4 class="modal-title">Eliminar</h4> </center>
         </div>
         <div class="modal-body">
-            <center> <p>¿Está seguro que desea eliminar de manera permanente este Programa? Se borraran todas las actividades asociadas al mismo</p> </center>
+            <center> <p>¿Está seguro que desea eliminar de manera permanente este Programa?</p> </center>
             <br>
             <center>
                 <a id="botonEliminarPrograma">
@@ -241,6 +255,11 @@
     $('#ModalRestaurarPrograma').on('show.bs.modal', function(e){
         var link_eliminar = $(e.relatedTarget).data('link-restaurar');
         $("#botonRestaurarPrograma").attr("href", link_eliminar);
+    });
+
+    $('#ModalEliminarPrograma').on('show.bs.modal', function(e){
+        var link_eliminar = $(e.relatedTarget).data('link-eliminar');
+        $("#botonEliminarPrograma").attr("href", link_eliminar);
     });
 
 </script>

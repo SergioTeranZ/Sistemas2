@@ -12,17 +12,17 @@
 {{end}}
 
 {{block descripcion}}
-    <div class="col-sm-8">
+    <div class="col-sm-12">
+          <h4><p> {{if programa_descripcion != None:}}
+                         Descripción: {{=programa_descripcion}}
 
-        <h4><p> {{if programa_descripcion != None:}}
-                       Descripción: {{=programa_descripcion}}
+                  {{else:}}
 
-                {{else:}}
-
-                {{pass}}
-             </p></h4>
-        <br>
+                  {{pass}}
+               </p></h4>
+          <br>
     </div>
+    <br>
 {{end}}
 
 {{block contenido}}
@@ -52,36 +52,49 @@
                  </div>
             </form>
         </div>
-        <div class="col-sm-5 col-sm-push-1" style="margin-top:10px;margin-left:50px">
-            <button type="button"
-                    class="btn btn-default green btn-border"
-                    data-toggle="modal"
-                    data-target="#myModal"
-                    >
-              <span class="glyphicon glyphicon-plus-sign"
-                    aria-hidden="true"></span> Agregar Actividad
-            </button>
+        {{ if admin in [1,2]: }}
+          <div class="col-sm-5 col-sm-push-1" style="margin-top:10px;margin-left:50px">
+              <button type="button"
+                      class="btn btn-default green btn-border"
+                      id = "agregarTipoActividadBtn"
+                      data-toggle="modal"
+                      data-target="#myModal"
+                      >
+                <span class="glyphicon glyphicon-plus-sign"
+                      aria-hidden="true"></span> Agregar Actividad
+              </button>
 
 
-            <a href="{{=URL(c='archivo_historico', f='gestionar.html')}}" >
-            <button type="button" class="btn btn-default red-trash btn-border">
-              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Archivo Histórico
-            </button>
-            </a>
-        </div>
+              <a href="{{=URL(c='archivo_historico', f='gestionar.html')}}" >
+              <button type="button" class="btn btn-default red-trash btn-border">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Archivo Histórico
+              </button>
+              </a>
+          </div>
+        {{pass}}
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-10">
+        <h5> Seleccionar un Tipo de Actividad para ver su descripción.</h5>
+      </div>
     </div>
 
     <div>
-        <br/>
         <!-- Tabla con los tipos de actividad disponibles en el sistema -->
         <div class="container-fluid card">
-            <table class="table table-striped table-condensed table-hover sortable">
+            <table id ="TipoActividadTable" class="table table-striped table-condensed table-hover sortable">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th><center>Editar</center></th>
-                        <th><center>Inhabilitar</center></th>
+                        <th><center>Código</center></th>
+                        <th><center>Nombre</center></th>
+                        <th><center>Descripción</center></th>
+                        <th></th>
+                        <th><center>Crear Producto</center></th>
+                        {{ if admin in [1,2]: }}
+                          <th><center>Editar</center></th>
+                          <th><center>Inhabilitar</center></th>
+                        {{pass}}
                     </tr>
                 </thead>
                 <tbody class="list">
@@ -92,38 +105,60 @@
                     {{else:}}
                         {{for tipoActividad in listaTipoActividades: }}
                         <tr>
-                            <td class="col-md-4 nombre_tipo">
-                                <a href="{{=URL(c='tipo_actividad', f='ver_tipo_actividad',args=[tipoActividad.id_tipo])}}">
+                            <td class="col-md-1">
+                              <center>
+                                  {{=tipoActividad.codigo}}
+                              </center>
+                            </td>
+                            <td class="col-md-3 nombre_tipo">
+                                <center><a class="a_table" href="{{=URL(c='tipo_actividad', f='ver_tipo_actividad',args=[tipoActividad.id_tipo])}}">
                                     {{=tipoActividad.nombre}}
-                                </a>
+                                </a></center>
                             </td>
-                            <td class="col-md-6 descripcion_tipo"> {{=tipoActividad.descripcion}}</td>
-                            <td class="center-vertically">
-                                <center>
-                                    <a href="#">
-                                        <span class="glyphicon glyphicon-edit blue"
-                                              data-toggle="modal"
-                                              data-target="#myModalEditar"
-                                              data-idtipo="{{=tipoActividad.id_tipo}}"
-                                              data-nombre="{{=tipoActividad.nombre}}"
-                                              data-descripcion="{{=tipoActividad.descripcion}}"
-                                              data-idprograma="{{=tipoActividad.id_programa}}"
-                                              data-tipopr="{{=tipoActividad.tipo_p_r}}">
-                                        </span>
+                            <td class="descripcion_tipo">
+                              <center>
+                                <span class="hideContent">{{=tipoActividad.descripcion}}</span>
+                                <span class="restContent" style="display:none;"></span>
+                              </center>
+                            </td>
+                            <td><button class="glyphicon glyphicon-eye-open showMoreContent"
+                                      style="border:none;background:none;"></button></td>
+                            <td>
+                              <center>
+                                    <a href="{{=URL(c='producto', f='agregar',args=[tipoActividad.id_tipo])}}">
+                                       <span class="glyphicon glyphicon-plus-sign"></span>
                                     </a>
                                 <center>
                             </td>
-                            <td class="center-vertically">
-                                <center>
-                                    <a href="#">
-                                       <span class="glyphicon glyphicon-remove red"
-                                             data-toggle="modal"
-                                             data-target="#myModalDelete"
-                                             data-id-tipo="{{=tipoActividad.id_tipo}}">
-                                       </span>
-                                    </a>
-                                <center>
-                            </td>
+                            {{ if admin in [1,2]: }}
+                              <td>
+                                  <center>
+                                      <a href="#">
+                                          <span class="glyphicon glyphicon-edit blue"
+                                                data-toggle="modal"
+                                                data-target="#myModalEditar"
+                                                data-idtipo="{{=tipoActividad.id_tipo}}"
+                                                data-nombre="{{=tipoActividad.nombre}}"
+                                                data-codigo="{{=tipoActividad.codigo}}"
+                                                data-descripcion="{{=tipoActividad.descripcion}}"
+                                                data-idprograma="{{=tipoActividad.id_programa}}"
+                                                data-tipopr="{{=tipoActividad.tipo_p_r}}">
+                                          </span>
+                                      </a>
+                                  <center>
+                              </td>
+                              <td>
+                                  <center>
+                                      <a href="#">
+                                         <span class="glyphicon glyphicon-remove red"
+                                               data-toggle="modal"
+                                               data-target="#myModalInhabilitar"
+                                               data-enlace-inhabilitar="{{=URL(f='enviar_tipo_papelera', args=[tipoActividad.id_tipo])}}">
+                                         </span>
+                                      </a>
+                                  <center>
+                              </td>
+                            {{pass}}
                         </tr>
                         {{pass}}
                     {{pass}}
@@ -140,7 +175,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <center><h4 class="modal-title">Agregar Tipo de Actividad</h4><center>
       </div>
-      <div class="modal-body" id="agregar_tipo_actividad">
+      <div class="modal-body" id="modalAgregar" data-hayErroresAgregar="{{=hayErroresAgregar}}">
           {{=formulario_agregar_tipo}}
       </div>
     </div>
@@ -155,7 +190,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <center><h4 class="modal-title">Editar Tipo de Actividad</h4><center>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="modalEditar" data-hayErroresEditar="{{=hayErroresEditar}}">
           {{=formulario_editar_tipo}}
       </div>
     </div>
@@ -164,7 +199,7 @@
 
 <!-- Modal Eliminar-->
 <div class="container">
-  <div class="modal fade" id="myModalDelete" role="dialog">
+  <div class="modal fade" id="myModalInhabilitar" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -175,11 +210,9 @@
             <center> <p>¿Está seguro que quiere inhabilitar este tipo de actividad?</p> </center>
             <br>
             <center>
-                <a href="javascript:location.reload();">
+                <a id="botonDelete" href="#">
                   <button type="button"
-                          class="btn blue-add btn-border"
-                          data-dismiss="modal"
-                          id="botonDelete">
+                          class="btn blue-add btn-border">
                       Inhabilitar</button>
                 </a>
                 <button type="button" class="btn btn-default btn-border" data-dismiss="modal">Cerrar</button>
@@ -188,50 +221,5 @@
         </div>
       </div>
     </div>
-  </div>
-
-<script type="text/javascript">
-
-    // Eliminar definitivamente
-
-    $('#myModalDelete').on('show.bs.modal', function (event) {
-        if (event.relatedTarget != null){
-            $("#botonDelete").attr("data-id-tipo", event.relatedTarget.getAttribute("data-id-tipo"));
-        }
-    });
-
-    $("#botonDelete").click(function (event){
-
-        var id_tipo = $("#botonDelete").attr("data-id-tipo");
-        ajax("{{=URL('enviar_tipo_papelera')}}/"+id_tipo,[]);
-        location.reload();
-    });
-
-    $(document).ready(function () {
-  var maxLongNombre  = 256;    // Longitud máxima que tendrá el campo nombre.
-  var maxLongDescrip = 2048;   // Longitud máxima que tendrá el campo descripción.
-  $('#myModalEditar').on('show.bs.modal', function(e){
-      var id_tipo = $(e.relatedTarget).data('idtipo');
-      var nombre      = $(e.relatedTarget).data('nombre');
-      var descripcion = $(e.relatedTarget).data('descripcion');
-      var id_programa = $(e.relatedTarget).data('idprograma');
-      var tipoPR =  $(e.relatedTarget).data('tipopr');
-      $(e.currentTarget).find('input[name="Id_tipo"]').val(id_tipo);
-      $("#no_table_Id_tipo__row").css("display","none");
-      $(e.currentTarget).find('input[name="Nombre"]').val(nombre);
-      $(e.currentTarget).find('textarea[name="Descripcion"]').val(descripcion);
-      $(e.currentTarget).find('#no_table_Programa').val(id_programa);
-      $(e.currentTarget).find('#no_table_Tipo').val(tipoPR);
-      // Muestra la cantidad de caracteres disponible en el textfield de nombre.
-      textoRestante(maxLongNombre,  $(e.currentTarget).find("#no_table_Nombre"));
-
-      // Muestra la cantidad de caracteres disponible en el textarea de descripción.
-      textoRestante(maxLongDescrip, $(e.currentTarget).find("#no_table_Descripcion"));
-  });
-
-    });
-
-</script>
-
-
+</div>
 {{end}}

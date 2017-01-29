@@ -4,7 +4,6 @@
     Registros de Programas en el Sistema
 {{end}}
 
-
 {{block contenido}}
 
     <script src="{{=URL('static','js/global.js')}}"></script>
@@ -35,21 +34,34 @@
                    </div>
               </form>
           </div>
-          <div class="col-sm-5 col-sm-push-3" style="margin-top:10px; ; margin-left:30px">
-              <button type="button" id="agregarProgBtn" class="btn btn-default green btn-border" data-toggle="modal" data-target="#myModal">
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Agregar Programa
-              </button>
-          </div>
+
+
+          {{ if admin in [1,2]: }}
+            <div class="col-sm-5 col-sm-push-3" style="margin-top:10px; ; margin-left:30px">
+                <button type="button" id="agregarProgBtn" class="btn btn-default green btn-border" data-toggle="modal" data-target="#myModal">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Agregar Programa
+                </button>
+            </div>
+          {{pass}}
       </div>
       <br>
+      <div class="row">
+        <div class="col-sm-10">
+          <h5> Seleccionar un programa para ver las actividades relacionadas.</h5>
+        </div>
+      </div>
       <div class="container-fluid card">
-      <table class="table table-striped table-condensed table-hover sortable">
+      <table id="TipoActividadTable" class="table table-striped table-condensed table-hover sortable">
           <thead>
               <tr>
                   <th>Título</th>
                   <th><center>Descripción</center></th>
-                  <th><center>Editar</center></th>
-                  <th><center>Inhabilitar</center></th>
+                  <th><center></center></th>
+                  <th><center>Abreviación</center></th>
+                  {{ if admin in [1,2]: }}
+                    <th><center>Editar</center></th>
+                    <th><center>Inhabilitar</center></th>
+                  {{pass}}
               </tr>
           </thead>
           <tbody class="list">
@@ -63,27 +75,38 @@
               {{else:}}
                   {{for programa in programas:}}
                       <tr>
-                          <td class="nombre_programa"><a class="a-table" href="{{=URL(c='tipo_actividad', f='gestionar')}}/{{=programa.id_programa}}">{{=programa.nombre}}</a></td>
-                          <td class="descripcion_programa"><center>{{=programa.descripcion}}</center></td>
-                          <td class="center-vertically">
-                              <center>
-                                  <a>
-                                      <span class="glyphicon glyphicon-edit blue botonEditar" id="editarProgBtn" data-toggle="modal"
-                                            data-id-programa={{=programa.id_programa}}
-                                            data-nombre="{{=programa.nombre}}"
-                                            data-descripcion="{{=programa.descripcion}}"
-                                            data-target="#ModalEditarPrograma"></span>
-                                  </a>
-                              <center>
-                           </td>
-                          <td class="center-vertically">
-                              <center>
-                                  <a>
-                                     <span class="glyphicon glyphicon-remove red" data-toggle="modal" data-target="#modalEliminarPrograma"
-                                            data-link-eliminar-programa="{{=URL(f='eliminar_programa', args=[programa.id_programa])}}"></span>
-                                  </a>
-                              <center>
+                          <td class="nombre_programa"><center><a class="a-table" href="{{=URL(c='tipo_actividad', f='gestionar')}}/{{=programa.id_programa}}">{{=programa.nombre}}</a></center></td>
+                          <td class="descripcion_programa">
+                            <center>
+                              <span class="hideContent">{{=programa.descripcion}}</span>
+                              <span class="restContent" style="display:none;"></span>
+                            </center>
                           </td>
+                          <td><button class="glyphicon glyphicon-eye-open showMoreContent"
+                                      style="border:none;background:none;"></button></td>
+                          <td><center>{{=programa.abreviacion}}</center></td>
+                          {{ if admin in [1,2]: }}
+                            <td>
+                                <center>
+                                    <a>
+                                        <span class="glyphicon glyphicon-edit blue botonEditar" id="editarProgBtn" data-toggle="modal"
+                                              data-id-programa={{=programa.id_programa}}
+                                              data-abreviacion={{=programa.abreviacion}}
+                                              data-nombre="{{=programa.nombre}}"
+                                              data-descripcion="{{=programa.descripcion}}"
+                                              data-target="#ModalEditarPrograma"></span>
+                                    </a>
+                                <center>
+                             </td>
+                            <td>
+                                <center>
+                                    <a>
+                                       <span class="glyphicon glyphicon-remove red" data-toggle="modal" data-target="#modalEliminarPrograma"
+                                              data-link-eliminar-programa="{{=URL(f='eliminar_programa', args=[programa.id_programa])}}"></span>
+                                    </a>
+                                <center>
+                            </td>
+                          {{pass}}
                       </tr>
                   {{pass}}
               {{pass}}

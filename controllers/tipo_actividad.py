@@ -14,9 +14,6 @@ def construir_formulario_agregar_tipo():
 
     admin = get_tipo_usuario(session)
 
-    if (admin==0):
-        redirect(URL(c ="default",f="index"))
-
     lista_programas =  db(db.PROGRAMA.papelera == False).select()
     programas = {}
 
@@ -27,10 +24,14 @@ def construir_formulario_agregar_tipo():
     formulario_agregar_tipo = SQLFORM.factory(
                         Field('Nombre',
                                requires = [IS_NOT_EMPTY(error_message='El nombre del tipo de actividad no puede quedar vacío.'),
-                                           IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales."),
+                                           IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin números ni caracteres especiales."),
                                            IS_LENGTH(128)]),
+                        Field('Codigo',
+                               requires = [IS_NOT_EMPTY(error_message='El tipo de actividad debe tener un codigo.'),
+                                           IS_MATCH('^[A-z0-9À-ÿŸ\s-]*$', error_message="Use solo letras, el caracter '-' y números."),
+                                           IS_LENGTH(10, error_message="Use como máximo diez caracteres")]),
                         Field('Tipo', default = 'Seleccione...',
-                              requires = IS_IN_SET({'P':'Evaluables por pares académicos', 'R':'No evaluables por pares académicos'},
+                              requires = IS_IN_SET({'P':'(P) Evaluables por pares académicos', 'R':'(R) No evaluables por pares académicos'},
                                                     zero=T('Seleccione...'),
                                                     error_message = 'Debes elegir entre "Evaluables por pares académicos" o "No evaluables por pares académicos"')),
                         Field('Descripcion', type="text",
@@ -50,9 +51,6 @@ def construir_formulario_agregar_tipo():
 def construir_formulario_editar_tipo():
 
     admin = get_tipo_usuario(session)
-    
-    if (admin==0):
-        redirect(URL(c ="default",f="index"))
 
     lista_programas = db(db.PROGRAMA.papelera == False).select()
     programas = {}
@@ -64,19 +62,21 @@ def construir_formulario_editar_tipo():
 
     formulario_editar_tipo = SQLFORM.factory(
                         Field('Nombre',
-                              #default = tipo.nombre,
                               requires = [IS_NOT_EMPTY(error_message='El nombre del tipo de actividad no puede quedar vacío.'),
-                                           IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales."),
-                                           IS_LENGTH(128)]),
-                        Field('Tipo', #default = tipo.tipo_p_r,
+                                          IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin números ni caracteres especiales."),
+                                          IS_LENGTH(128)]),
+                        Field('Codigo',
+                             requires = [IS_NOT_EMPTY(error_message='El tipo de actividad debe tener un codigo.'),
+                                         IS_MATCH('^[A-z0-9À-ÿŸ\s-]*$', error_message="Use solo letras, el caracter '-' y números."),
+                                         IS_LENGTH(10, error_message="Use como máximo diez caracteres")]),
+                        Field('Tipo',
                               requires = IS_IN_SET({'P':'Evaluables por pares académicos', 'R':'No evaluables por pares académicos'},
                                                     zero=T('Seleccione...'),
                                                     error_message = 'Debes elegir entre "Evaluables por pares académicos" o "No evaluables por pares académicos"')),
                         Field('Descripcion', type="text",
-                              #default = tipo.descripcion,
                               requires = [IS_NOT_EMPTY(error_message='La descripción del tipo de actividad no puede quedar vacía.'),
                                           IS_LENGTH(2048)]),
-                        Field('Programa', #default = tipo.id_programa,
+                        Field('Programa',
                               requires = IS_IN_SET(programas, zero="Seleccione...",
                                                    error_message = 'Debes elegir uno de los programas listados.')),
                         Field('Id_tipo',type="hidden"),
@@ -85,8 +85,8 @@ def construir_formulario_editar_tipo():
                 )
 
     formulario_editar_tipo.element(_type='submit')['_class']="btn blue-add btn-block btn-border"
-    formulario_editar_tipo.element(_type='submit')['_value']="Agregar"
-    
+    formulario_editar_tipo.element(_type='submit')['_value']="Guardar"
+
     return formulario_editar_tipo
 
 #. ---------------------------------------------------------------------------
@@ -96,30 +96,28 @@ def construir_formulario_editar_tipo():
 def gestionar():
 
     admin = get_tipo_usuario(session)
-    
-    if (admin==0):
-        redirect(URL(c ="default",f="index"))
-      
+
     formulario_agregar_tipo = construir_formulario_agregar_tipo()
     formulario_editar_tipo = construir_formulario_editar_tipo()
 
     # Vista básica
     if formulario_editar_tipo.accepts(request.vars, session,formname="formulario_editar_tipo"):
-        tipo = db(db.TIPO_ACTIVIDAD.id_tipo == request.vars.Id_tipo).select()[0]
-        tipo.nombre = request.vars.Nombre
-        tipo.tipo_p_r = request.vars.Tipo
-        tipo.descripcion = request.vars.Descripcion
-        id_programa = request.vars.Programa
-        tipo.id_programa = id_programa
-        tipo.update_record()                                 # Se actualiza el tipo de actividad.
+      tipo = db(db.TIPO_ACTIVIDAD.id_tipo == request.vars.Id_tipo).select()[0]
+      tipo.nombre = request.vars.Nombre
+      tipo.codigo = request.vars.Codigo
+      tipo.tipo_p_r = request.vars.Tipo
+      tipo.descripcion = request.vars.Descripcion
+      id_programa = request.vars.Programa
+      tipo.id_programa = id_programa
+      tipo.update_record()                                 # Se actualiza el tipo de actividad.
 
     if formulario_agregar_tipo.accepts(request.vars, session,formname="formulario_agregar_tipo"):
-        id_programa = request.vars.Programa
-        db.TIPO_ACTIVIDAD.insert(nombre = request.vars.Nombre,
-                                 tipo_p_r = request.vars.Tipo,
-                                 descripcion = request.vars.Descripcion,
-                                 id_programa = id_programa)
-
+      id_programa = request.vars.Programa
+      db.TIPO_ACTIVIDAD.insert(nombre = request.vars.Nombre,
+                               codigo = request.vars.Codigo,
+                               tipo_p_r = request.vars.Tipo,
+                               descripcion = request.vars.Descripcion,
+                               id_programa = id_programa)
 
     if len(request.args) == 0:
 
@@ -140,22 +138,24 @@ def gestionar():
 
 
     return dict(admin = get_tipo_usuario(session)
-            , listaTipoActividades = listaTipoActividades
-            , programa_nombre = programa["nombre"], programa_descripcion = programa["descripcion"]
-            , formulario_agregar_tipo = formulario_agregar_tipo
-            , formulario_editar_tipo = formulario_editar_tipo)
+          , listaTipoActividades = listaTipoActividades
+          , programa_nombre = programa["nombre"], programa_descripcion = programa["descripcion"]
+          , formulario_agregar_tipo = formulario_agregar_tipo
+          , formulario_editar_tipo = formulario_editar_tipo
+          , hayErroresAgregar = formulario_agregar_tipo.errors
+          , hayErroresEditar = formulario_editar_tipo.errors)
 
 #. --------------------------------------------------------------------------- .
 '''
     Permite añadir un nuevo tipo de actividad.
 '''
 def agregar_tipo():
-  
+
     admin = get_tipo_usuario(session)
-    
+
     if (admin==0):
         redirect(URL(c ="default",f="index"))
-      
+
     # Configuro widgets para el formulario de Agregar Tipo Actividad
     db.TIPO_ACTIVIDAD.nombre.widget = SQLFORM.widgets.string.widget
     db.TIPO_ACTIVIDAD.descripcion.widget = SQLFORM.widgets.text.widget
@@ -177,7 +177,7 @@ def agregar_tipo():
     formulario_agregar_tipo = SQLFORM.factory(
                         Field('Nombre',
                                requires = [IS_NOT_EMPTY(error_message='El nombre del tipo de actividad no puede quedar vacío.'),
-                                           IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales."),
+                                           IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin números ni caracteres especiales."),
                                            IS_LENGTH(128)]),
                         Field('Tipo', default = 'Seleccione...',
                               requires = IS_IN_SET({'P':'Evaluables por pares académicos', 'R':'No evaluables por pares académicos'},
@@ -227,10 +227,7 @@ tambien tiene una tabla con los campos que ya han sido agregados
 def formulario_agregar_tipo_campos():
 
     admin = get_tipo_usuario(session)
-    
-    if (admin==0):
-        redirect(URL(c ="default",f="index"))
-      
+
     # Se definen los posibles tipos de campo.
     tipo_campos = ['Fecha', 'Telefono', 'Texto Corto','Documento','Cantidad Entera','Cantidad Decimal', 'Texto Largo', 'Cedula']
 
@@ -244,7 +241,7 @@ def formulario_agregar_tipo_campos():
     # Si no se utiliza catálogo.
     formSimple = SQLFORM.factory(
                     Field('Nombre', requires=[IS_NOT_EMPTY(error_message="Por favor elija un nombre para el campo."),
-                                              IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales.")]),
+                                              IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin números ni caracteres especiales.")]),
                     Field('Tipo', requires = IS_IN_SET(tipo_campos, zero="Seleccione...", error_message="Seleccione un tipo para el campo")),
                     Field('Obligatorio', widget=SQLFORM.widgets.boolean.widget),
                     submit_button = 'Agregar'
@@ -277,10 +274,7 @@ encuentra en la base)
 def eliminar_campo():
 
     admin = get_tipo_usuario(session)
-    
-    if (admin==0):
-        redirect(URL(c ="default",f="index"))
-      
+
     id_tipo = int(request.args[0])
     id_campo = int(request.args[1])
 
@@ -304,10 +298,10 @@ def eliminar_campo():
 def enviar_tipo_papelera():
 
     admin = get_tipo_usuario(session)
-    
+
     if (admin==0):
         redirect(URL(c ="default",f="index"))
-      
+
     id_tipo = int(request.args[0])
     tipo = db(db.TIPO_ACTIVIDAD.id_tipo == id_tipo).select(db.TIPO_ACTIVIDAD.ALL).first()
     tipo.update(papelera=True)
@@ -319,10 +313,7 @@ def enviar_tipo_papelera():
 def ver_tipo_actividad():
 
     admin = get_tipo_usuario(session)
-    
-    if (admin==0):
-        redirect(URL(c ="default",f="index"))
-      
+
     id_tipo = request.args[0]
 
     query = reduce(lambda a, b: (a & b), [db.TIPO_ACTIVIDAD.id_tipo == id_tipo,
@@ -432,10 +423,10 @@ def ver_tipo_actividad():
 def editar_tipo():
 
     admin = get_tipo_usuario(session)
-    
+
     if (admin==0):
         redirect(URL(c ="default",f="index"))
-      
+
     id = request.args[0]        # Se identifica cual tipo de actividad se identificará.
 
     session.tipo_id_editar = id
@@ -456,7 +447,7 @@ def editar_tipo():
                         Field('Nombre',
                               default = tipo.nombre,
                               requires = [IS_NOT_EMPTY(error_message='El nombre del tipo de actividad no puede quedar vacío.'),
-                                           IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales."),
+                                           IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin números ni caracteres especiales."),
                                            IS_LENGTH(128)]),
                         Field('Tipo', default = tipo.tipo_p_r,
                               requires = IS_IN_SET({'P':'Evaluables por pares académicos', 'R':'No evaluables por pares académicos'},
@@ -509,14 +500,12 @@ campo de un catalogo.
 def formularioEditarCampo():
 
     admin = get_tipo_usuario(session)
+
     
-    if (admin==0):
-        redirect(URL(c ="default",f="index"))
-      
     formulario = SQLFORM.factory(
                     Field('nombre',
                           requires = [IS_NOT_EMPTY(error_message='El nombre del campo no puede quedar vacio.'),
-                                      IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales.")]),
+                                      IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin números ni caracteres especiales.")]),
                     Field('tipo_campo',
                            requires = [IS_IN_SET(tipo_campos, zero='Seleccione...', error_message="Debe seleccionar un tipo para el campo.")],
                            widget = SQLFORM.widgets.options.widget),
@@ -526,7 +515,7 @@ def formularioEditarCampo():
                     labels = {'nombre'      : 'Nombre',
                               'tipo_campo'  : 'Tipo',
                               'obligatorio' : 'Obligatorio'}
-                    
+
                    )
 
     return formulario

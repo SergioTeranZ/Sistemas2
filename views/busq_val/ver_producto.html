@@ -6,14 +6,13 @@
 
 {{block subtitulo}}
     <!-- Nombre del usuario -->
-   Producto del usuario: {{=usuario_nombre}}
-    </a>
+   Producto del Usuario: {{=usuario_nombre}}
 {{end}}
 
 {{block descripcion}}
     <div class="row">
         <div class="col-sm-12">
-        <!-- Datos del usuario -->
+            <p><b>Autor(es): </b> {{=nombres_autores}}</p>
             <p><b>Programa: </b> {{=programa_nombre}}</p>
             <p><b>Tipo de Actividad: </b>{{=tipo_actividad.nombre}}</p>
         </div>
@@ -35,11 +34,31 @@
                     {{=form_datos}}
                     </div>
                 {{pass}}
+                <ul class="list-group col-sm-offset-3" style="list-style-type: none">.
+                {{if len(documento) != 0: }}
+                    {{for doc in documento:}}
+                        <li>
+                            <div class = "col-sm-8">
+                                <a  href='/{{=request.application}}/producto/get_documento/{{=doc[0]}}' target="blanck">
+                                    {{=doc[1]}}
+                                </a>
+                            </div>
+                            <span >
+                                <a href='/{{=request.application}}/producto/descargar_documento/{{=doc[0]}}'
+                                     title="Descargar Documento}" class="glyphicon glyphicon-save blue"></a>
+
+                            </span>
+                            {{pass}}
+                        </li>
+                {{pass}}
+                </ul>
                 <div class="row">
                     <hr class="col-sm-offset-2 col-sm-8"><br>
                 </div>
+
                 <h4 class="col-sm-offset-2">Comprobantes:</h4>
-                <ul class="list-group col-sm-offset-3" style="list-style-type: none">
+                <ul class="list-group col-sm-offset-3" style="list-style-type: none">.
+
                 {{for comprobante in comprobantes:}}
                     <li>
                         <div class = "col-sm-8">
@@ -62,23 +81,23 @@
                 <center>
 
                     <a href="#">
-                        <button id="button_validar" type="button" class="btn btn-default btn-border"
+                        <button id="button_validar" type="button" class="btn btn-default btn-border green-validar "
                                                     data-toggle="modal"
                                                     data-target="#modalValidarProducto"
                                                     data-nombre="{{=producto.nombre}}"
                                                     data-id-producto="{{=producto.id_producto}}"
                                                     style="color:#7CB342">
-                            Validar <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span>
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Validar
                         </button>
                     </a>
 
                     <a href="#">
-                    <button type="button" class="btn btn-default red btn-border"
+                    <button type="button" class="btn btn-default red-trash btn-border"
                                           data-toggle="modal"
                                           data-target="#modalRechazarProducto"
                                           data-id-producto="{{=producto.id_producto}}"
                                           style="color:#F44336">
-                        Rechazar <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> No Validar
                     </button>
                         </a>
                 </center>

@@ -5,7 +5,7 @@
 {{end}}
 
 {{block subtitulo}}
-	Gestion de respaldos
+	Gestión de respaldos
 {{end}}
 
 {{block descripcion}}
@@ -15,7 +15,7 @@
                 <div>
                   <!-- <a href="{{=URL(c='usuarios',f ='agregar')}}"> -->
                   <button type="button" id="agregarProgBtn" class="btn btn-default green btn-border"  style="margin-bottom: 1em;" onclick="location.href='{{=URL('generar_backup')}}'"">
-                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-target="#ModalCrearBackup></span> Generar backup
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" data-toggle="modal" data-target="#ModalCrearBackup"></span> Generar backup
                   </button>
                   <!-- </a> -->
                 </div>
@@ -25,7 +25,11 @@
         <!-- Datos del usuario -->
                 <div>
                   <!-- <a href="{{=URL(c='usuarios',f ='agregar')}}"> -->
-                  <button type="button" id="agregarProgBtn" class="btn btn-default green btn-border"  style="margin-bottom: 1em;" data-toggle="modal" data-target="#myModalAgregar">
+                  <button type="button" id="agregarProgBtn" class="btn btn-default green btn-border"  style="margin-bottom: 1em;" >
+                  <!-- Agregar cuando se vaya a implementar la funcion de restaurar desde
+                       archivo al boton: data-toggle="modal" data-target="#myModalAgregar"
+                  -->
+
                     <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Restaurar desde archivo
                   </button>
                   <!-- </a> -->
@@ -48,6 +52,7 @@
               <th>Fecha</th>
               <th>Hora</th>
               <th><center>Restaurar</center></th>
+              <th><center>Descargar</center></th>
               <th><center>Eliminar</center></th>
               </tr>
             </thead>
@@ -70,15 +75,21 @@
                     <td class="center-vertically">
                     <a href="{{=URL(c='backup',f='restaurar_backup',args=[ backup ] )}}">
                           <center>
-                      <span class="glyphicon glyphicon-refresh"></span>
+                      <span class="glyphicon glyphicon-refresh restaurar"></span>
 
                           <center>
                     </a>
                     </td>
                     <td class="center-vertically">
-                    <a href="{{=URL(c='backup',f='eliminar',args=[ backup ])}}">
+                        <center>
+                        <a href="{{=URL(c='backup',f='descargar_backup',args=[ backup ] )}}"
+                        class="glyphicon glyphicon-save blue" target="blanck" title="Descargar Backup"></a>
+                        </center>
+                    </td>
+                    <td class="center-vertically">
+                    <a href="#">
                       <center>
-                      <span class="glyphicon glyphicon-remove eliminar" style="color:#F44336" data-target="#ModalEliminarBackup></span>
+                      <span class="glyphicon glyphicon-remove eliminar" style="color:#F44336" data-toggle="modal" data-target="#ModalEliminarBackup"></span>
 
                       </center>
                     </a>
@@ -97,27 +108,28 @@
         </div> 
         </div> 
 
-								 <!-- Modal Editar-->
-<div id="ModalCrearBackup" class="modal fade" role="dialog">
+ <!-- Modal Editar-->
+<div class ="container">
+<div class="modal" id="ModalCrearBackup" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <center><h4 class="modal-title">Backup Creado</h4><center>
       </div>
-      <div class="modal-body" id="modalEditar" data-hayErroresEditar="{{=hayErroresEditar}}">
+      <div class="modal-body">
           <p> <center> El backup ha sido creado exitosamente </center> </p>
       </div>
     </div>
   </div>
 </div>
-
+</div>
+			     
 <!-- Modal Eliminar-->
 <div class="container">
   <!-- Modal -->
-  <div class="modal fade" id="ModalEliminarBackup" role="dialog">
+  <div class="modal" id="ModalEliminarBackup" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -128,7 +140,7 @@
             <center> <p>¿Está seguro que quiere eliminar este backup?</p> </center>
             <br>
             <center>
-                <a id="BotonEliminar">
+                <a id="BotonEliminar" href="{{=URL(c='backup',f='eliminar',args=[ backup ])}}">
                   <button type="button" class="btn blue-add btn-border">
                           Eliminar
                   </button>
@@ -142,6 +154,7 @@
   </div>
 
     <!-- Modal -->
+<div class="container">											    
     <div id="myModalAgregar" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -159,18 +172,35 @@
                           
                           <input type="file" name="archivo">
                           <br>
-                          <input type="submit" name="Carga" value="Cargar" class="btn blue-add btn-block btn-border">
+                          <input type="submit" name="Carga" value="Cargar" class="btn blue-add btn-block btn-border" data-toggle="modal" data-target="#ModalCargaBackup">
                         </form>
                         </div>
                     </div>
-
                 </form> 
           </div>
         </div>
       </div>
     </div>
+</div>
 
-
+ <!-- Modal Backup Restaruado de Archivo-->
+<div class ="container">
+<div class="modal" id="ModalCargaBackup" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <center><h4 class="modal-title">Backup Restaurado</h4><center>
+      </div>
+      <div class="modal-body">
+          <p> <center> El backup ha sido restaurado exitosamente </center> </p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>														    
+														    
 {{end}}
 
 

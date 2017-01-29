@@ -140,6 +140,7 @@ def vGestionarCatalogos():
                 formulario_agregar_campo    = formulario_agregar_campo,
                 formulario_editar_campo     = formulario_editar_campo,
                 formulario_cambiar_nombre   = formulario_cambiar_nombre,
+                hayErroresAgregar=formulario_agregar_catalogo.errors,
                 admin = admin)
 
 '''

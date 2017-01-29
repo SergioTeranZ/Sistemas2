@@ -1,54 +1,65 @@
 # -*- coding: utf-8 -*-
 from notificaciones import *
 from funciones_siradex import get_tipo_usuario,get_tipo_usuario_not_loged
+import pygal
+from datetime  import date
 
 # Funcion para busquedas publicas
 def busqueda():
     admin = get_tipo_usuario_not_loged(session)
     try:
-        graficaPie = URL('busq_val','graficaPie')
-        graficaBar = URL('busq_val','graficaBar')
-        graficaLine = URL('busq_val','graficaLine')
+        sql = "SELECT prod.descripcion," + \
+                     "prod.nombre," +\
+                     "prod.id_tipo," +\
+                     "prod.id_producto,"+\
+                     "prod.fecha_realizacion,"+\
+                     "p.id_programa,"+\
+                     "p.nombre,"+\
+                     "p.abreviacion"+\
+                " FROM (( PRODUCTO AS prod INNER JOIN TIPO_ACTIVIDAD AS a ON prod.id_tipo=a.id_tipo)"+\
+                     "INNER JOIN PROGRAMA AS p ON a.id_programa = p.id_programa) "+\
+                " WHERE p.papelera=False "
+
 
         if (request.vars.Producto == ""):
-            sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE nombre LIKE \'%" + request.vars.Producto + "%\'"
-
+            pass
         else:
-            sql = "SELECT descripcion,nombre,id_tipo,id_producto FROM PRODUCTO WHERE plainto_tsquery('english','"+request.vars.Producto+"') @@ to_tsvector('english',coalesce(nombre,'') || ' '|| coalesce(descripcion,''))"
+            sql += "AND plainto_tsquery('english','"+request.vars.Producto+"') @@ to_tsvector('english',coalesce(prod.nombre,'') || ' '|| coalesce(prod.descripcion,''))"
 
         if request.vars.Programa != None and\
            request.vars.TipoActividad != None and\
            request.vars.fecha != None and\
            request.vars.Autor != None:
         
-
-            # Anadimos el filtro del usuario T-T T-N N-T N-N
+            # Anadimos el filtro del usuario
             if request.vars.Autor != "all":
-                sql += " AND usbid_usu_creador = " + request.vars.Autor
+                sql += " AND prod.usbid_usu_creador = " + request.vars.Autor
 
             # Anadimos el filtro del tipo de actividad
             if request.vars.Programa != "all" and request.vars.TipoActividad == "all":
-                sql += " AND id_tipo IN (SELECT id_tipo FROM TIPO_ACTIVIDAD WHERE id_programa=" + str(request.vars.Programa)+ ")"
+                sql += " AND p.id_programa =" + str(request.vars.Programa)+ ")"
 
             elif request.vars.TipoActividad != "all":
-                sql += " AND id_tipo=\'" + str(request.vars.TipoActividad)+"'"
+                sql += " AND prod.id_tipo=\'" + str(request.vars.TipoActividad)+"'"
 
             # Anadimos el filtro de la fecha
             if request.vars.fecha != "":
-                sql += " AND fecha_realizacion <= '" + request.vars.fecha +"'"
+                sql += " AND prod.fecha_realizacion <= '" + request.vars.fecha +"'"
 
         # Ahora dependiendo del usuario anadimos las restricciones del estado (no se contempla cuando
         # el usuario esta bloqueado porqu no deberia llegar aqui)
-        if (session.usuario["tipo"] == "Usuario"):
-            sql += " AND estado=\'Validado\';"
+        if (session.usuario == None or session.usuario["tipo"] == "Usuario"):
+            sql += " AND prod.estado=\'Validado\';"
         elif (session.usuario["tipo"] == "DEX" or session.usuario["tipo"] == "Administrador"):
             sql += ";"
 
-        print(sql)
+        
         productos = db.executesql(sql)
 
+        graficaPie = URL(c='busq_val',f='graficaPie',vars=dict(productos=productos))
+        graficaBar = URL(c='busq_val',f='graficaBar',vars=dict(productos=productos))
+        tabla = URL(c='busq_val',f='tabla',vars=dict(productos=productos))     
         
-
         return locals()
     except:
 
@@ -66,9 +77,16 @@ def ver_producto():
     tipo_actividad = db(db.TIPO_ACTIVIDAD.id_tipo == producto.id_tipo).select().first()
     programa_nombre = db(db.PROGRAMA.id_programa == tipo_actividad.id_programa).select().first().nombre
 
+    #Obtenemos el nombre de los autores
+    nombres_autores  = usuario_nombre #Primer autor siempre es el creador.
+    autores = db(db.PARTICIPA_PRODUCTO.id_producto == id_producto).select()
+
+    for autor in autores:
+      autorAux = db(db.USUARIO.usbid == autor.usbid_usuario).select().first()
+      nombres_autores  = nombres_autores + ', ' + autorAux.nombres +' '+ autorAux.apellidos
+
     query = "SELECT id_comprobante, descripcion FROM COMPROBANTE WHERE producto="+str(id_producto)+";"
     comprobantes = db.executesql(query)
-
 
     form = SQLFORM.factory(
             Field("Nombre_Producto", default=producto.nombre,writable = False),
@@ -81,7 +99,7 @@ def ver_producto():
     campos = db(db.PRODUCTO_TIENE_CAMPO.id_prod == producto.id_producto).select()
 
     elementos = []
-
+    documento= []
     for campo_valor in campos:
         campo = db(db.CAMPO.id_campo == campo_valor.id_campo).select().first()
         nombre_campo = campo.nombre
@@ -93,8 +111,13 @@ def ver_producto():
         except:
             pass
 
-        elementos.append(Field(nombre_campo, default=campo_valor.valor_campo, writable=False))
-
+        if campo.tipo_campo=="Documento":
+            temp=[str(campo.id_campo), nombre_campo ]
+            documento += [temp]
+        else :
+             elementos.append(Field(nombre_campo, default=campo_valor.valor_campo, writable=False))
+    
+    print(documento)
     if len(elementos) != 0:
         form_datos = SQLFORM.factory(*elementos, readonly=True)
 
@@ -119,12 +142,18 @@ def ver_producto():
                           submit_button = 'Validar',
                           labels = {'nombre' : 'Nuevo Nombre'})
 
+    formulario_validar.element(_type='submit')['_class']="btn blue-add btn-block btn-border"
+    formulario_validar.element(_type='submit')['_value']="Validar"
+
     ## Formulario para colocar la razon de rechazo de un producto.
     formulario_rechazar = SQLFORM.factory(
                           Field('razon', type="text"),
                           Field('id_producto_r', type="string", default=""),
                           submit_button = 'Agregar',
                           labels = {'razon' : 'Razón de Rechazo del Producto'})
+
+    formulario_rechazar.element(_type='submit')['_class']="btn blue-add btn-block btn-border"
+    formulario_rechazar.element(_type='submit')['_value']="Rechazar"
 
     hayErrores = {}
 
@@ -164,7 +193,6 @@ def ver_producto():
 
         # rechazamos efectimavamente el producto.
         rechazar(id_producto)
-
 
     ## Fin formulario de rechazo
 
@@ -241,61 +269,98 @@ def rechazar(id_producto):
     redirect(URL('gestionar_validacion.html'))
 
 def graficaPie():
+    productos = request.vars.productos
 
-    query = "select programa.nombre, programa.abreviacion, count(producto.nombre)" + \
-    " from ((programa inner join tipo_actividad on programa.id_programa=tipo_actividad.id_programa)" + \
-    " inner join producto on producto.id_tipo=tipo_actividad.id_tipo and producto.usbid_usu_creador=\'"+ session.usuario["usbid"] +\
-    "\' and producto.estado=\'Validado\') group by programa.nombre, programa.abreviacion;"
-
-    query2 = "select count(producto.nombre) from producto where producto.usbid_usu_creador=\'"+ session.usuario["usbid"]+"\' and producto.estado=\'Validado\';"
-
-    datos = db.executesql(query)
-    num_productos = db.executesql(query2)[0][0]
-
-    import pygal
     pie_chart = pygal.Pie()
-    for producto in datos:
-        porcentaje = (producto[2]*100)//num_productos
-        pie_chart.add(producto[1],[{'value':porcentaje, 'label':producto[0]}])
+    total_productos = len(productos)
+
+    programas = {}
+
+    for producto in productos:
+        id_programa = producto.split('\'')[4].split(',')[-2]
+        try:
+            programas[id_programa]['repeticiones'] += 1
+        except:
+            nombre = producto.split('\'')[-4]
+            abrev  = producto.split('\'')[-2]
+            programas[id_programa] = {'nombre':nombre,'abreviacion':abrev,'repeticiones':1}
+
+
+    for key in programas:
+        porcentaje = (programas[key]['repeticiones']*100)//total_productos
+        pie_chart.add(programas[key]['abreviacion'],[{'value':porcentaje, 'label':programas[key]['nombre']}])
+
     return pie_chart.render()
 
 def graficaBar():
+    productos = request.vars.productos
+    fecha_hasta = date.today().year
+    fecha_desde = fecha_hasta - 10
 
-    query = "select programa.nombre, programa.abreviacion, count(producto.nombre)" + \
-    " from ((programa inner join tipo_actividad on programa.id_programa=tipo_actividad.id_programa)" + \
-    " inner join producto on producto.id_tipo=tipo_actividad.id_tipo and producto.usbid_usu_creador=\'"+ session.usuario["usbid"] +\
-    "\' and producto.estado=\'Validado\') group by programa.nombre, programa.abreviacion;"
+    line_chart = pygal.Bar()
+    line_chart.x_labels = map(str, range(fecha_desde, fecha_hasta + 1))
+    
+    programas = db(db.PROGRAMA['papelera']==False).select().as_list()
 
-    query2 = "select count(producto.nombre) from producto where producto.usbid_usu_creador=\'"+ session.usuario["usbid"]+"\' and producto.estado=\'Validado\';"
+    programas_dict = {}
+    for programa in programas:
+        ident = programa['id_programa']
+        nombre = programa['nombre']
+        abrev = programa['abreviacion']
+        programas_dict[ident] = {'nombre':nombre, 'abreviacion':abrev, 'repeticiones':[0 for x in range(11)]}
 
-    datos = db.executesql(query)
-    num_productos = db.executesql(query2)[0][0]
+    for producto in productos:
+        id_programa = int(producto.split('\'')[4].split(',')[-2])
+        anio = int(producto.split('\'')[4].split(',')[3][15:])
+        i = anio-fecha_desde
 
-    import pygal
-    bar_chart = pygal.Bar()
-    for producto in datos:
-        porcentaje = (producto[2]*100)//num_productos
-        bar_chart.add(producto[1],[{'value':porcentaje, 'label':producto[0]}])
-    return bar_chart.render()
+        if (i <= 0):
+            i=0
+       
+        programas_dict[id_programa]['repeticiones'][i]+=1
 
-def graficaLine():
 
-    query = "select programa.nombre, programa.abreviacion, count(producto.nombre)" + \
-    " from ((programa inner join tipo_actividad on programa.id_programa=tipo_actividad.id_programa)" + \
-    " inner join producto on producto.id_tipo=tipo_actividad.id_tipo and producto.usbid_usu_creador=\'"+ session.usuario["usbid"] +\
-    "\' and producto.estado=\'Validado\') group by programa.nombre, programa.abreviacion;"
+    for key in programas_dict.keys():
+        line_chart.add(programas_dict[key]['abreviacion'], programas_dict[key]['repeticiones'])
 
-    query2 = "select count(producto.nombre) from producto where producto.usbid_usu_creador=\'"+ session.usuario["usbid"]+"\' and producto.estado=\'Validado\';"
 
-    datos = db.executesql(query)
-    num_productos = db.executesql(query2)[0][0]
+    return line_chart.render()
 
-    import pygal
+def tabla():
+
+    productos = request.vars.productos
+
+
+    fecha_hasta = date.today().year
+    fecha_desde = fecha_hasta - 10
+
     line_chart = pygal.Line()
-    for producto in datos:
-        porcentaje = (producto[2]*100)//num_productos
-        line_chart.add(producto[1],[{'value':porcentaje, 'label':producto[0]}])
-    return line_chart.render()             
+    line_chart.x_labels = map(str, range(fecha_desde, fecha_hasta + 1))
+    
+    programas = db(db.PROGRAMA['papelera']==False).select().as_list()
+
+    programas_dict = {}
+    for programa in programas:
+        ident = programa['id_programa']
+        nombre = programa['nombre']
+        abrev = programa['abreviacion']
+        programas_dict[ident] = {'nombre':nombre, 'abreviacion':abrev, 'repeticiones':[0 for x in range(11)]}
+
+    for producto in productos:
+        id_programa = int(producto.split('\'')[4].split(',')[-2])
+        anio = int(producto.split('\'')[4].split(',')[3][15:])
+        i = anio-fecha_desde
+
+        if (i <= 0):
+            i=0
+       
+        programas_dict[id_programa]['repeticiones'][i]+=1
+
+
+    for key in programas_dict.keys():
+        line_chart.add(programas_dict[key]['abreviacion'], programas_dict[key]['repeticiones'])
+
+    return line_chart.render()            
 
 def eliminar():
 
@@ -307,4 +372,4 @@ def eliminar():
     archivo = request.args[0]
     comando = "rm ./applications/SiraDex/backup/" + archivo
     resp = os.system(comando)
-    redirect(URL('index')) 
+    redirect(URL('index'))

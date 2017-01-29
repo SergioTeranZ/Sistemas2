@@ -43,6 +43,7 @@ CREATE TABLE PROGRAMA(
 
 CREATE TABLE TIPO_ACTIVIDAD(
   id_tipo             SERIAL        NOT NULL,
+  codigo              VARCHAR(10)   NOT NULL,
   nombre              VARCHAR(128)  NOT NULL,
   tipo_p_r            VARCHAR(1)    NOT NULL,
   descripcion         VARCHAR(2048) NOT NULL,
@@ -73,7 +74,7 @@ CREATE TABLE PRODUCTO(
   id_tipo             INT,
   nombre              VARCHAR(128),
   descripcion         VARCHAR(256),
-  estado          VARCHAR DEFAULT 'Por Validar',
+  estado              VARCHAR DEFAULT 'Por Validar',
   evaluacion_criterio VARCHAR(256),
   evaluacion_valor    VARCHAR(256),
   fecha_realizacion   DATE,

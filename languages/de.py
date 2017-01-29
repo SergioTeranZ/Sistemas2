@@ -1,4 +1,4 @@
-# coding: utf8
+# -*- coding: utf-8 -*-
 {
 '!langcode!': 'de',
 '!langname!': 'Deutsch (DE)',
@@ -24,6 +24,7 @@
 'Are you sure you want to delete this object?': 'Sind Sie sich sicher, dass Sie dieses Objekt löschen wollen?',
 'Available Databases and Tables': 'Verfügbare Datenbanken und Tabellen',
 'Buy this book': 'Dieses Buch kaufen',
+"Buy web2py's book": "Buy web2py's book",
 'cache': 'cache',
 'Cache': 'Cache',
 'Cache Cleared': 'Cache geleert',
@@ -36,6 +37,7 @@
 'Client IP': 'Client IP',
 'Community': 'Community',
 'Components and Plugins': 'Komponenten und Plugins',
+'Config.ini': 'Config.ini',
 'Controller': 'Controller',
 'Copyright': 'Copyright',
 'Created By': 'Erstellt von',
@@ -55,6 +57,7 @@
 'Deployment Recipes': 'Entwicklungsrezepte',
 'Description': 'Beschreibung',
 'design': 'Design',
+'Design': 'Design',
 'DISK': 'DISK',
 'Disk Cache Keys': 'Disk Cache Keys',
 'Disk Cleared': 'Disk gelöscht',
@@ -82,6 +85,7 @@
 'Hello World': 'Hallo Welt',
 'Hello World  ## Kommentar': 'Hallo Welt  ',
 'Hello World## Kommentar': 'Hallo Welt',
+'Helping web2py': 'Helping web2py',
 'Home': 'Startseite',
 'How did you get here?': 'Wie sind Sie hier her gelangt?',
 'import': 'Importieren',
@@ -118,6 +122,7 @@
 'next %s rows': 'nächste %s Reihen',
 'No databases in this application': 'Keine Datenbank in dieser Anwendung',
 'Object or table name': 'Objekt- oder Tabellenname',
+'Online book': 'Online book',
 'Online examples': 'Online Beispiele',
 'or import from csv file': 'oder von csv Datei importieren',
 'Origin': 'Ursprung',

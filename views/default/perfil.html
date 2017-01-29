@@ -8,15 +8,19 @@
 {{end}}
 
 {{block descripcion}}
-    <div class="row" style="height: 25em;"> 
-      <div class="col-lg-12">
+<style scoped="scoped">
+  embed{
+    max-height: 20em;
+  }
+</style>
+    <div class="row"> 
         <!-- usuario -->
-        <div class="col-md-6 " style="margin-top: 6em;">
+        <div class="col-md-5" style="margin-top: 6em;">
           <!-- Nombre del usuario -->
           <h1>
             {{=session.usuario['first_name'].split(' ')[0]}} {{=session.usuario['last_name'].split(' ')[0]}}
 
-            <!-- icono editar -->       
+            <!-- icono editar -->
             <a id="editar" href="{{=URL('EditarPerfil')}}" >
             <!-- {{=IMG(_src=URL('static', 'icon', args='i_edit.png'),_style='max-height:1em') }}-->
             <span class="glyphicon glyphicon-edit green-icn"></span>
@@ -28,18 +32,18 @@
             <b>Nombre completo:</b> {{=session.usuario['first_name']}} {{=session.usuario['last_name']}}
             <br>
             {{try:}}
-            {{if session.usuario['dpto'] != None:}}
-            <b>Departamento: </b>{{=session.usuario['dpto']}}
-            {{pass}}
-            <br>
+              {{if session.usuario['dpto'] != None:}}
+                <b>Departamento: </b>{{=session.usuario['dpto']}}
+              {{pass}}
+              <br>
             {{except:}}
-            {{try:}}
-            {{if session.usuario['carrera'] != None:}}
-            <b>Carrera: </b>{{=session.usuario['carrera']}}
-            {{pass}}
-            <br>
-            {{except:}}
-            {{pass}}
+              {{try:}}
+                {{if session.usuario['carrera'] != None:}}
+                  <b>Carrera: </b>{{=session.usuario['carrera']}}
+                {{pass}}
+                <br>
+              {{except:}}
+              {{pass}}
             {{pass}}
             <b>Usbid:</b> {{=session.usuario['usbid']}}
             <br>
@@ -48,36 +52,104 @@
             <b>Correo:</b> {{=session.usuario['usbid']+"@usb.ve"}}
             <br>
             {{ if session.usuario['alternativo'] != None:}}
-            <b>Correo alternativo:</b> {{=session.usuario['alternativo']}}
-            <br>
+              <b>Correo alternativo:</b> {{=session.usuario['alternativo']}}
+              <br>
             {{pass}}
             {{if session.usuario['phone'] != None:}}
-            <b>Telefono:</b> {{=session.usuario['phone']}}
+              <b>Telefono:</b> {{=session.usuario['phone']}}
             {{pass}}
             <br>
           </p>
         </div>
-
-        <div class="col-md-6">
+        <!-- tabla -->
+        <div class="col-md-4">
+          <div class="tab-content card" style="text-align: center;">
+            
             <embed type="image/svg+xml" src="{{=grafica }}" />
+           <button type="button" id="btn-pieChart" class="btn btn-default green btn-border" data-toggle="modal" data-target="#grafica" style="margin-top: -5em;">
+            <span class="glyphicon glyphicon-resize-full"></span> Aumentar
+          </button>
+          </div>
         </div>
+
+        <!-- botones -->
+          <div class="col-md-3">
+            <div class="row">
+              <span style="margin-left: 42.99em;">
+                          
+                    <button type="button" class="btn btn-default green btn-border center-block" data-toggle="modal" data-target="#tabla">
+                        <span class="glyphicon glyphicon-resize-full"></span>
+                        Ver Actividades por año
+                    </button>
+              </span>            
+            </div>
+            <br>      
+            <div class="row">
+              <span style="margin-left: 42.99em;">
+                  
+                <a href="{{=URL(c='producto',f='gestionar')}}">        
+                    <button type="button" class="btn btn-default green btn-border center-block" data-toggle="modal" data-target="#myModal">
+                        Ver Todas Mis Productos
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                </a>
+              </span>
+            </div>
+          </div>
         </div>
+
+
+<!-- Modal 2 -->
+<div id="tabla" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="width: 59em;left: -20%">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><center>Actividades por Años</center></h4>
+      </div>
+      <div class="modal-body">
+        <embed type="image/svg+xml" src="{{=tabla }}" style="max-width: 100%" />
+      </div>
+      <div class="modal-footer">
+      <center>
+        <button type="button" class="btn btn-default green btn-border " data-dismiss="modal">
+        <span class="glyphicon glyphicon-resize-small"></span>
+        Cerrar</button>
+        </center>
+      </div>
     </div>
+  </div>
+</div>  
+
+<!-- Modal 3 -->
+<div id="grafica" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><center>Grafica de Actividades</center></h4>
+      </div>
+      <div class="modal-body">
+        <embed type="image/svg+xml" src="{{=grafica }}" style="min-height:31em" />
+      </div>
+      <div class="modal-footer">
+      <center>
+        <button type="button" class="btn btn-default green btn-border " data-dismiss="modal">
+        <span class="glyphicon glyphicon-resize-small"></span>
+        Cerrar</button>
+        </center>
+      </div>
+    </div>
+
+  </div>
+</div>     
 {{end}}
 
 {{block contenido}}
-  <!-- boton -->
-  <div class="row">
-    <div class="col-md-4" style="margin-left: 42.99em;">
-        
-      <a href="{{=URL(c='producto',f='gestionar')}}">        
-          <button type="button" class="btn btn-default green btn-border center-block" data-toggle="modal" data-target="#myModal">
-              Ver Todas Mis Actividades
-          </button>
-      </a>
-    </div>
-  </div>
-  <br>
 
   <!-- tabla -->
   <div class="row">
@@ -86,27 +158,27 @@
     <div class="card">
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active act">
-            <a  href="#activas" 
-                aria-controls="activas" 
-                role="tab" 
+            <a  href="#activas"
+                aria-controls="activas"
+                role="tab"
                 data-toggle="tab">
                 Validados
             </a>
         </li>
-        
+
         <li role="presentation" class="esp">
-            <a  href="#espera" 
-                aria-controls="espera" 
-                role="tab" 
+            <a  href="#espera"
+                aria-controls="espera"
+                role="tab"
                 data-toggle="tab">
                 Por Validar
             </a>
         </li>
 
         <li role="presentation" class="rec">
-            <a  href="#rechazadas" 
-                aria-controls="rechazadas" 
-                role="tab" 
+            <a  href="#rechazadas"
+                aria-controls="rechazadas"
+                role="tab"
                 data-toggle="tab">
                 No Validados
             </a>
@@ -121,12 +193,12 @@
             No tiene productos validados
             {{else:}}
             <table class="table table-striped table-condensed table-hover sortable">
-                <tbody>  
+                <tbody>
                 {{for x in productos["Validados"]:}}
                     <tr>
                     <td class="center-vertically">
                         {{=x.nombre}}
-                    </td>    
+                    </td>
                     </tr>
                 {{pass}}
                 </tbody>
@@ -142,10 +214,10 @@
                 <tbody>
                 {{for x in productos["Por Validar"]:}}
                     <tr>
-                        <td class="center-vertically">     
+                        <td class="center-vertically">
                             {{=x.nombre}}
                         </td>
-                    </tr>    
+                    </tr>
                 {{pass}}
                 </tbody>
                 </table>
@@ -160,7 +232,7 @@
                 {{for x in productos["No Validados"]:}}
                 <tr>
                     <td class="center-vertically">
-                        {{=x.nombre}}        
+                        {{=x.nombre}}
                     </td>
                 </tr>
                 {{pass}}
@@ -171,7 +243,7 @@
     </div>
     </div>
   </div>
-{{end}}                                    
+{{end}}
 
 {{block script}}
   <script>
@@ -190,7 +262,7 @@
 
       $("#btn-esp").click(function(){
       $("#dv-esp").toggle(300);
-          });                            
+          });
     });
   </script>
 {{end}}
