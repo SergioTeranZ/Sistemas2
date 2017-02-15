@@ -132,7 +132,8 @@ auth.settings.reset_password_requires_verification = True
 #raise HTTP(404)
 
 tipo_campos = ['Fecha', 'Telefono', 'Texto Corto','Documento','Cantidad Entera','Cantidad Decimal', 'Texto Largo', 'Cedula']
-
+dias = ['Lunes', 'Martes','Miercoles','JUeves','Viernes','Sabado','Domingo']
+modo= ['Diario', 'Semanal', 'Quincenal', 'Mensual', 'Trimestral']
 #db.usuario.drop()
 db.define_table('USUARIO',
     Field('ci',type='string',length=8, notnull=True,required=True),
@@ -311,5 +312,14 @@ db.define_table('BACKUP',
     Field('descripcion', type='string', length=256),
     Field('fecha', type='date'),
     primarykey=['id_backup'],
+    migrate=False
+);
+
+db.define_table('FRECUENCIA_BACKUP',
+    Field('hora',notnull = True, type='id'),
+    Field('modo', type='string', notnull = True,requires=IS_IN_SET(modo)),
+    Field('dia', type='string', requires=IS_IN_SET(dias)),
+    Field('activo', type='boolean', notnull = True, default=False),
+    primarykey=['hora'],
     migrate=False
 );
