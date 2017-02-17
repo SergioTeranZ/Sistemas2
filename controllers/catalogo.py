@@ -49,7 +49,7 @@ def vGestionarCatalogos():
         redirect(URL('vGestionarCatalogos',args=[id_catalogo]))
     # En caso de que el formulario no sea aceptado
     else:
-        message = 'Error en el Formulario de Agregar Catalogo'
+        message = 'Error en el Formulario de Agregar Catálogo'
 
     #Formulario para agregar un campo a un catalogo
     if formulario_agregar_campo.process(formname = "formulario_agregar_campo").accepted:
@@ -98,7 +98,7 @@ def vGestionarCatalogos():
 
         # Si el nombre no esta repetido, modificamos el campo
         if nombre_repetido:
-            session.message = 'Ya existe un campo llamado "' + nombre_nuevo + '" en el catalogo.'
+            session.message = 'Ya existe un campo llamado "' + nombre_nuevo + '" en el catálogo.'
         else:
             #Actualizamos el campo
             db.CAMPO_CATALOGO[id_campo] = dict(nombre      = nombre_nuevo,
@@ -119,7 +119,7 @@ def vGestionarCatalogos():
         db.CATALOGO[id_catalogo] = dict(nombre = nombre_nuevo)
         redirect(URL('vGestionarCatalogos',args=[id_catalogo]))
     else:
-        message = 'Error en el Formulario de Editar Nombre Catalogo'
+        message = 'Error en el Formulario de Editar Nombre Catálogo'
 
 
     formulario_agregar_catalogo.element(_type='submit')['_class']="btn blue-add btn-block btn-border"
@@ -158,9 +158,9 @@ def AgregarCatalogo():
 
     formulario = SQLFORM.factory(
                         Field('nombre',
-                              requires = [IS_NOT_EMPTY(error_message='El nombre del catalogo no puede quedar vacio.'),
-                                          IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales."),
-                                          IS_NOT_IN_DB(db, 'CATALOGO.nombre', error_message="Ya existe un catalogo con ese nombre.")]),
+                              requires = [IS_NOT_EMPTY(error_message='El nombre del catálogo no puede quedar vacío.'),
+                                          IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use sólo letras, sin números ni caracteres especiales."),
+                                          IS_NOT_IN_DB(db, 'CATALOGO.nombre', error_message="Ya existe un catálogo con ese nombre.")]),
                               submit_button='Agregar',
                               labels={'nombre':'Nombre'})
 
@@ -180,8 +180,8 @@ def AgregarCampo():
     # Genero formulario para los campos
     formulario = SQLFORM.factory(
                     Field('nombre',
-                          requires = [IS_NOT_EMPTY(error_message='El nombre del campo no puede quedar vacio.'),
-                                      IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales.")]),
+                          requires = [IS_NOT_EMPTY(error_message='El nombre del campo no puede quedar vacío.'),
+                                      IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use sólo letras, sin números ni caracteres especiales.")]),
                     Field('tipo_campo',
                            requires = [IS_IN_SET(tipo_campos, zero='Seleccione...', error_message="Debe seleccionar un tipo para el campo.")],
                            widget = SQLFORM.widgets.options.widget),
@@ -238,8 +238,8 @@ def EditarCampo():
 
     formulario = SQLFORM.factory(
                     Field('nombre',
-                          requires = [IS_NOT_EMPTY(error_message='El nombre del campo no puede quedar vacio.'),
-                                      IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales.")]),
+                          requires = [IS_NOT_EMPTY(error_message='El nombre del campo no puede quedar vacío.'),
+                                      IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use sólo letras, sin números ni caracteres especiales.")]),
                     Field('tipo_campo',
                            requires = [IS_IN_SET(tipo_campos, zero='Seleccione...', error_message="Debe seleccionar un tipo para el campo.")],
                            widget = SQLFORM.widgets.options.widget),
@@ -285,9 +285,9 @@ def cambiarNombreCatalogo():
 
     formulario = SQLFORM.factory(
                         Field('nombre',
-                              requires = [IS_NOT_EMPTY(error_message='El nombre del catalogo no puede quedar vacio.'),
-                                          IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use solo letras, sin numeros ni caracteres especiales."),
-                                          IS_NOT_IN_DB(db, 'CATALOGO.nombre', error_message="Ya existe un catalogo con ese nombre.")]),
+                              requires = [IS_NOT_EMPTY(error_message='El nombre del catálogo no puede quedar vacío.'),
+                                          IS_MATCH('^[A-zÀ-ÿŸ\s]*$', error_message="Use sólo letras, sin números ni caracteres especiales."),
+                                          IS_NOT_IN_DB(db, 'CATALOGO.nombre', error_message="Ya existe un catálogo con ese nombre.")]),
                         Field('id_catalogo', type='string'),
                               submit_button='Cambiar Nombre',
                               labels={'nombre':'Nuevo Nombre'})

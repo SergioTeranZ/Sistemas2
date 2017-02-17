@@ -26,8 +26,8 @@
             	{{=form}}
 			</div>
 			<center><p>
-				 Una vez enviado su producto no podrá editarlo, este esperara a ser evaluado por el Comité de Evaluación
-				 de Decanato de Extensión. Si desea editarlo más tarde puede guardarlo como Borrador.
+				 Una vez enviado su producto no podrá editarlo, este esperará a ser evaluado por el Comité de Evaluación
+				 del Decanato de Extensión. Si desea editarlo más tarde puede guardarlo como Borrador.
 			</p></center>
 		</div>
 	</div>
@@ -103,13 +103,13 @@ $(document).ready(function () {
 
 	$(".Cedula").click(function(){
 
-		$(".Cedula").siblings(".help-block").html( "el formato de la cedula es XX.XXX.XXX");
+		$(".Cedula").siblings(".help-block").html( "El formato de la cédula es XX.XXX.XXX");
 
 	});
 
 	$(".Telefono").click(function(){
 
-		$(".Telefono").siblings(".help-block").html( "el formato de telefono es (0xxx)xxx-xxxx");
+		$(".Telefono").siblings(".help-block").html( "El formato de teléfono es (0xxx)xxx-xxxx");
 
 	});
 
@@ -127,11 +127,11 @@ $(document).ready(function () {
 														<div class="col-sm-10 col-sm-offset-2" style="margin-left:15em;">\
 											    	\
 											    	<span class="col-sm-8" style="text-align: justify;">\
-															Puedes agregar a otros usuarios registrados en el SIRADEX como Autores.\
+															Puede agregar a otros usuarios registrados en el SIRADEx como Autores.\
 															<br>\
 															Todos los autores pueden ver este producto.\
 															<br>\
-															Un producto tiene un maximo de <b>5</b> autores adicionales.\
+															Un producto tiene un máximo de <b>5</b> autores adicionales.\
 														</span>\
 														\
 														<div class="col-md-offset-3">\
@@ -201,9 +201,9 @@ $(document).ready(function () {
 														<div class="col-sm-10 col-sm-offset-2" style="margin-left:15em;">\
 											    	\
 											    	<span class="col-sm-6">\
-															Puedes subir <span id="cant_restante"><b id="num_cant">5</b></span> comprobantes mas\
+															Puedes subir <span id="cant_restante"><b id="num_cant">5</b></span> comprobantes más\
 															<br>\
-															Solo puedes subir documentos PDF\
+															Sólo puede subir documentos PDF\
 														</span>\
 														\
 														<div class="col-md-offset-3">\
@@ -228,7 +228,7 @@ $(document).ready(function () {
 		if (comprobante_mostrado<cantidad_comprobantes){
 			if($('#no_table_c0mpr0bant3_'+comprobante_mostrado).val()=="" ){
 				if (!error_comprobante){
-					$('#no_table_c0mpr0bant3_'+comprobante_mostrado).parent().append('<span id="error_archivo_'+comprobante_mostrado+'" class="help-block error">Primero debes cargar el comprobante</span>');
+					$('#no_table_c0mpr0bant3_'+comprobante_mostrado).parent().append('<span id="error_archivo_'+comprobante_mostrado+'" class="help-block error">Primero debe cargar el comprobante</span>');
 					error_comprobante = 1;
 				}
 			}
@@ -236,7 +236,7 @@ $(document).ready(function () {
 				$('#error_archivo_'+comprobante_mostrado).addClass("hidden");
 				if($('#no_table_d3scr1pc10n_comprobante_'+comprobante_mostrado).val()==""){
 					if (!error_descripcion){
-						$('#no_table_d3scr1pc10n_comprobante_'+comprobante_mostrado).parent().append('<span id="error_descripcion_'+comprobante_mostrado+'" class="help-block error">La descripcion de un archivo cargado es obligatoria</span>');
+						$('#no_table_d3scr1pc10n_comprobante_'+comprobante_mostrado).parent().append('<span id="error_descripcion_'+comprobante_mostrado+'" class="help-block error">La descripción de un archivo cargado es obligatoria</span>');
 						error_descripcion = 1;
 					}
 				}
@@ -262,7 +262,7 @@ $(document).ready(function () {
 	$('.upload').change(function(){
 		var ext = $(this).val().split('.').pop().toLowerCase();
 		if(ext != 'pdf') {
-		    alert('solo se permite cargar archivos PDF');
+		    alert('Sólo se permite cargar archivos PDF');
 		    $(this).val('');
 		    $(this).filestyle('clear');
 
@@ -274,22 +274,22 @@ $(document).ready(function () {
 		var infor_cargada = false;
 
 		if($('#no_table_nombre').val()=="" ){
-			alert("El nombre del producto no puede estar vacio ");
+			alert("El nombre del producto no puede estar vacío ");
 			return false;
 		}
 
 		if($('#no_table_descripcion').val()=="" ){
-			alert("La descripcion del producto no puede estar vacio ");
+			alert("La descripción del producto no puede estar vacía ");
 			return false;
 		}
 
 		if($('#no_table_fecha_realizacion').val()=="" ){
-			alert("La fecha del producto no puede estar vacio ");
+			alert("La fecha del producto no puede estar vacía ");
 			return false;
 		}
 
 		if($('#no_table_lugar').val()=="" ){
-			alert("El lugar de la actividad no puede estar vacio ");
+			alert("El lugar de la actividad no puede estar vacío ");
 			return false;
 		}
 
@@ -302,7 +302,7 @@ $(document).ready(function () {
 			if($('.Cedula').val()!=null){
 				var Var = $('.Cedula').val();
 				if (/\d{2}.\d{3}.\d{3}$/.test(Var)== false){
-					alert("No es el formato del numero de cedula adecuado  ");
+					alert("No es el formato del numero de cédula adecuado  ");
 					return false;
 				}
 			}
@@ -312,7 +312,7 @@ $(document).ready(function () {
 			if($('.Cedula').val()!=null){
 				var Var = $('.Telefono').val();
 				if (/\(0\d{3}\)\d{3}-\d{4}$/.test(Var)== false){
-					alert("No es el formato del numero de telefono adecuado ");
+					alert("No es el formato del número de teléfono adecuado ");
 					return false;
 				}
 			}
@@ -323,7 +323,7 @@ $(document).ready(function () {
 			if($('.Decimal').val()!=null){
 				var Var = $('.Decimal').val();
 				if (/\d\.\d/.test(Var)== false){
-					alert("No es un numero Decimal  ");
+					alert("No es un número Decimal  ");
 					return false;
 				}
 			}
@@ -333,7 +333,7 @@ $(document).ready(function () {
 			if($('.Entero').val()!=null){
 				var Var = $('.Entero').val();
 				if (/\d\.\d/.test(Var)== false){
-					alert("No es un numero Entero  ");
+					alert("No es un número Entero  ");
 					return false;
 				}
 			}
@@ -342,7 +342,7 @@ $(document).ready(function () {
 		for (i = 1; i <= cantidad_comprobantes; i++) {
 	    	if($('#no_table_c0mpr0bant3_'+i).val() !="" ){
 	    		if($('#no_table_d3scr1pc10n_comprobante_'+i).val()==""){
-	    			alert("La descripción de los comprobantes cargados no puede ser vacia");
+	    			alert("La descripción de los comprobantes cargados no puede ser vacía");
 	    			return false;
 	    		}
 	    		infor_cargada = true;

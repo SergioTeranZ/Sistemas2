@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <table class="table table-bordered tabla-border" >
         <tbody class="tabla-border">
-            <tr> <th class="col-md-2 tabla-border">Codigo de la Actividad:</th> <td class="col-md-6 tabla-border"> {{=tipo.codigo}} </td> </tr>
+            <tr> <th class="col-md-2 tabla-border">Código de la Actividad:</th> <td class="col-md-6 tabla-border"> {{=tipo.codigo}} </td> </tr>
             <tr> <th class="col-md-2 tabla-border">Programa:</th>         <td class="col-md-6 tabla-border"> {{=programa_nombre}} </td> </tr>
             <tr> <th class="col-md-2 tabla-border">Tipo de Actividad:</th> <td class="col-md-6 tabla-border"> {{='(P) Evaluables por pares académicos' if tipo.tipo_p_r == "P" else '(R) No evaluables por pares académicos'}} </td></tr>
             <tr> <th class="col-md-2 tabla-border">Descripción:</th>      <td class="col-md-6 tabla-border"> {{=tipo.descripcion}} </td> </tr>
@@ -149,7 +149,7 @@
         </div>
         <div class="modal-body">
             <center> <p>¿Está seguro que quiere eliminar este campo del Tipo de Actividad?</p> </center>
-            <center> <p> Esto eliminara también los valores asociados a este campo en los productos registrados. Esta acción no puede deshacerse.</p> </center>
+            <center> <p> Esto eliminará también los valores asociados a este campo en los productos registrados. Esta acción no puede deshacerse.</p> </center>
             <br>
             <center>
                 <a id="botonEliminarCampo">
@@ -192,7 +192,7 @@
             {{= formMultiple.custom.begin}}
             <table class="table table-condensed">
                 <tr>
-                  <td class="col-md-2 tabla-border">Catalogo</td>
+                  <td class="col-md-2 tabla-border">Catálogo</td>
                   <td class="col-md-3 tabla-border">{{= formMultiple.custom.widget.Catalogo}}</td>
                   <td class="col-md-2 tabla-border">{{= formMultiple.custom.submit}}</td>
                 </tr>

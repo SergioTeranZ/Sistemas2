@@ -33,7 +33,7 @@ def gestionar():
     ## Formulario para colocar el mensaje.
     formulario_contactar = SQLFORM.factory(
                                 Field('asunto', type="string", requires=[IS_LENGTH(50)]),
-                                Field('mensaje', type="text", requires=[IS_NOT_EMPTY(error_message='El mensaje no puede estar vacio')]),
+                                Field('mensaje', type="text", requires=[IS_NOT_EMPTY(error_message='El mensaje no puede estar vacío')]),
                                 Field('usbid', type="string"),
                                 submit_button = 'Enviar')
 
@@ -92,7 +92,7 @@ def agregar():
         buscasUser = os.popen("ldapsearch -x -h ldap.usb.ve -b \"dc=usb,dc=ve\" uid="+ usbidAux +" |grep numEntries")
 
         if buscasUser.read() == '':
-            message = T("El usuario no esta registrado en el CAS")
+            message = T("El usuario no está registrado en el CAS")
         else:
             user = get_ldap_data(usbidAux)
             print(user)
@@ -125,7 +125,7 @@ def agregar():
                     message = T("Debe Especificar un Tipo")
 
             else:
-                message= T("El usuario ya esta registrado")
+                message= T("El usuario ya está registrado")
     return dict(form = forma,message = message, admin=get_tipo_usuario(session))
 
 

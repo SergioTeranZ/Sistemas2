@@ -24,7 +24,7 @@ def index():
         redirect(URL('index'))
 
     elif form.errors:
-        response.flash = 'el formulario tiene errores'
+        response.flash = 'El formulario tiene errores'
 
 
     return locals()
